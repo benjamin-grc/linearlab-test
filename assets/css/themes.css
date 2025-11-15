@@ -1,0 +1,20 @@
+:root {
+
+    --bg-color: #BBE1FA;
+    --text-color: #1B262C;
+    --btn-color: #3282B8;
+    --btn-hcolor: #0F4C75;
+
+    --font-family : "Courier New";
+
+    }
+
+
+.darkmode{
+
+    --bg-color: #1b262c;
+    --text-color: #bbe1fa;
+    --btn-color: #0f4c75;
+    --btn-hcolor: #3282b8;
+
+    }
