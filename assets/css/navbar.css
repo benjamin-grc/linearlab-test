@@ -9,11 +9,20 @@ html{
 } 
 
 nav{
+    position: sticky;
+    top: 0;
+    left: 0;
+    z-index: 100;
+
     height: 60px;
+    width: 100%;
+    padding: 0 1.5rem;
+
     background-color: var(--text-color);
     display: flex;
     justify-content: flex-end;
     align-items: center;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
 }
 
 .links-container{
@@ -22,6 +31,7 @@ nav{
     display: flex;
     flex-direction: row;
     align-items: center;
+    gap: 0.5rem;
 }
 
 nav a{
@@ -63,12 +73,14 @@ nav svg{
         right: -100%;
         z-index: 10;
         width: 200px;
+        height: 100vh;
 
         background-color: var(--text-color);
         box-shadow: -5px 0 5px rgba(0, 0, 0, 0.25);
         transition: 0.70s ease-out;
+        padding: 1.5rem 0;
     }
-    
+
     nav a{
         box-sizing: border-box;
         height: auto;
@@ -82,17 +94,26 @@ nav svg{
         display: block;
     }
 
+    #overlay{
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background-color: rgba(0, 0, 0, 0.2);
+        opacity: 0;
+        pointer-events: none;
+        transition: opacity 0.3s ease;
+    }
+
     #sidebar-active:checked ~ .links-container{
         right: 0;
     }
 
     #sidebar-active:checked ~ #overlay{
-        height: 100%;
-        width: 100%;
-        position: fixed;
-        top: 0;
-        left: 0;
         z-index: 9;
+        opacity: 1;
+        pointer-events: auto;
     }
 
 }
