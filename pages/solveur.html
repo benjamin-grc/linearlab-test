@@ -46,16 +46,28 @@
               m (nombre d'équations) =
               <input type="number" id="m" value="3" min="1" max="20">
             </label>
-      
+
             <label>
               n (nombre d'inconnues) =
               <input type="number" id="n" value="3" min="1" max="20">
             </label>
-      
+
             <button onclick="generateSystem()">Créer le système</button>
           </div>
-      
 
-</body>
-</html>
+
+          <div id="systemContainer"></div>
+
+          <div class="controls">
+            <button onclick="solveSystem()">Résoudre</button>
+            <button onclick="generateExample()">Exemple aléatoire</button>
+          </div>
+
+          <pre id="result" class="result"></pre>
+        </div>
+    </div>
+
+
+  </body>
+  </html>
 
