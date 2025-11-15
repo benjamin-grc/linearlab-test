@@ -1,5 +1,8 @@
 const EPS = 1e-10;
 
+let coeffInputs = [];
+let rhsInputs = [];
+
 // Convertit un nombre en fraction "p/q"
 function fractionString(x) {
   try {
@@ -55,6 +58,19 @@ function generateSystem() {
   html += '</table>';
 
   container.innerHTML = html;
+
+  coeffInputs = Array.from({ length: m }, () => Array(n).fill(null));
+  rhsInputs = Array(m).fill(null);
+
+  const rows = container.querySelectorAll('table tr');
+  rows.forEach((row, index) => {
+    if (index === 0) return; // skip header
+    const inputs = Array.from(row.querySelectorAll('input'));
+    const coeffRow = inputs.slice(0, n);
+    const rhs = inputs[n];
+    coeffInputs[index - 1] = coeffRow;
+    rhsInputs[index - 1] = rhs;
+  });
 }
 
 // Exemple aléatoire
@@ -67,7 +83,14 @@ function generateExample() {
     return;
   }
 
-  if (!document.getElementById("a_0_0")) {
+  const needsInit =
+    !coeffInputs.length ||
+    coeffInputs.length !== m ||
+    coeffInputs.some(row => !row || row.length !== n) ||
+    rhsInputs.length !== m ||
+    rhsInputs.some(input => !input);
+
+  if (needsInit) {
     generateSystem();
   }
 
@@ -75,9 +98,9 @@ function generateExample() {
     for (let j = 0; j < n; j++) {
       let v = Math.floor(Math.random() * 11) - 5; // -5..5
       if (v === 0) v = 1;
-      document.getElementById(`a_${i}_${j}`).value = v;
+      coeffInputs[i][j].value = v;
     }
-    document.getElementById(`b_${i}`).value = Math.floor(Math.random() * 21) - 10;
+    rhsInputs[i].value = Math.floor(Math.random() * 21) - 10;
   }
 
   if (resultDiv) resultDiv.textContent = "";
@@ -144,17 +167,28 @@ function solveSystem() {
     return;
   }
 
+  if (
+    !coeffInputs.length ||
+    coeffInputs.length !== m ||
+    coeffInputs.some(row => !row || row.length !== n) ||
+    rhsInputs.length !== m ||
+    rhsInputs.some(input => !input)
+  ) {
+    result.textContent = "Veuillez d'abord générer le système.";
+    return;
+  }
+
   // matrice augmentée A|b
   let A = [];
   try {
     for (let i = 0; i < m; i++) {
       let row = [];
       for (let j = 0; j < n; j++) {
-        const v = parseFloat(document.getElementById(`a_${i}_${j}`).value);
+        const v = parseFloat(coeffInputs[i][j].value);
         if (isNaN(v)) throw new Error("Coefficient invalide");
         row.push(v);
       }
-      const bi = parseFloat(document.getElementById(`b_${i}`).value);
+      const bi = parseFloat(rhsInputs[i].value);
       if (isNaN(bi)) throw new Error("Second membre invalide");
       row.push(bi);
       A.push(row);
