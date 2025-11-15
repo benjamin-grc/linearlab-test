@@ -3,5 +3,30 @@ body {
   background-color: var(--bg-color);
   min-height: 100vh; /* s’adapte à la taille écran */
   font-family: var(--font-family), monospace;
+}
 
+.container{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  
+  margin-top: 50px;
+}
+
+.title{
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+}
+
+h1 {
+  color: var(--text-color);
+  font-size: 60px;
+}
+
+h2{
+  color: var(--text-color);
 }

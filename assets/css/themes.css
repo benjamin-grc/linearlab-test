@@ -1,11 +1,11 @@
 :root {
 
-    --bg-color: #BBE1FA;
-    --text-color: #1B262C;
-    --btn-color: #3282B8;
-    --btn-hcolor: #0F4C75;
+    --bg-color: #d5def5;
+    --text-color: #430f58;
+    --btn-color: #8594e4;
+    --btn-hcolor: #6643b5;
 
-    --font-family : "Courier New";
+    --font-family : 'Ubuntu', sans-serif;
 
     }
 
