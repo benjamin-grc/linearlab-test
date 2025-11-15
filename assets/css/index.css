@@ -30,3 +30,28 @@ h1 {
 h2{
   color: var(--text-color);
 }
+
+.main-text{
+  border: solid 2px black;
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  margin: 5rem auto;
+  max-width: 70%; /* limite largeur pour meilleure lisibilité */
+  padding: 10px;
+  gap: 2rem;
+}
+
+.main-text h3{
+  font-size: 34px;
+  color: var(--text-color);
+  text-align: left;
+}
+
+.main-text p{
+  font-size: 20px;
+  color: black ;
+  line-height: 1.40;
+  justify-content: center;
+  text-align: justify;
+}
