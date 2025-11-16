@@ -8,7 +8,7 @@
     <!-- Feuille de styles -->
     <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="../assets/css/themes.css" />
-    <link rel="stylesheet" href="../assets/css/solver.css" />
+    <link rel="stylesheet" href="../assets/css/about.css" />
     <link rel="stylesheet" href="../assets/css/navbar.css" />
 
     <!-- Chargement du script externe -->
@@ -46,63 +46,35 @@
     </div>
 </nav>
 
-    <div class="page-content">
-        <div class="solver">
-          <h2>Solveur de système linéaire (m×n)</h2>
-      
-          <div class="dimensions">
-            <label>
-              m (nombre d'équations) =
-              <input type="number" id="m" value="3" min="1" max="20">
-            </label>
-
-            <label>
-              n (nombre d'inconnues) =
-              <input type="number" id="n" value="3" min="1" max="20">
-            </label>
-
-            <button onclick="generateSystem()">Créer le système</button>
-          </div>
-
-
-          <div id="systemContainer"></div>
-
-          <div class="controls">
-            <button onclick="solveSystem()">Résoudre</button>
-            <button onclick="generateExample()">Exemple aléatoire</button>
-          </div>
-
-          <div id="result" class="result" aria-live="polite"></div>
-        </div>
-
-        <div class="explanation">
-          <div class="text-explanation">
-            <p>
-              Ce calculateur résout des systèmes linéaires du type 
-            
-              $$
-              \begin{cases}
-              a_{11} x_1 + a_{12} x_2 + \cdots + a_{1n} x_n = b_1 \\
-              a_{21} x_1 + a_{22} x_2 + \cdots + a_{2n} x_n = b_2 \\
-              \vdots \\
-              a_{m1} x_1 + a_{m2} x_2 + \cdots + a_{mn} x_n = b_m
-              \end{cases}
-              $$
-            
-              Il vous retourne donc les valeurs de \( x_1, x_2, \cdots, x_n \) qui vérifient les équations. Tout ce
-              que vous avez à faire, c’est entrer les valeurs des coefficients \( a_{ij} \) et du vecteur \( b \).
-            </p>
-            
-            <p>
-              <br>
-              Pour vous déplacer de cellule en cellule, vous pouvez utiliser la touche « Tab », et les flèches haut
-              et bas pour incrémenter.
-            </p>
-            
-          </div>
-
-        </div>
+<div class="container">
+    
+    <div class="title">
+        <h1>À propos</h1>
     </div>
+
+    <div class="main-text">
+
+    <p>
+        Ce site est un outil dédié à l’algèbre linéaire. Il met à disposition un calculateur matriciel complet ainsi qu’un solveur d’équations pour réaliser rapidement des opérations, vérifier des résultats ou explorer différentes méthodes. Une partie théorique est également proposée pour accompagner l’utilisation de l’outil et rappeler les notions essentielles. L’objectif est d’offrir un espace simple, clair et efficace pour travailler l’algèbre linéaire sans logiciel complexe.
+    </p>
+    <br>
+    <p>
+        Pour les interesé les calculs matriciel sont fait avec du javascript et la librairie math.js, le solveur 
+        utilise l'algorithme du pivot de Gauss, et affiche les solutions en \(\text{LaTex}\) avec le module MathJax
+    </p>
+    <br>
+    <p>
+        Si vous etes interesé pour suivre d'autre projet que j'ai fait (ou ferai ...) vous pouvez vous rendre 
+        sur ma page personnel en clickant <a href="https://benjamingarcia.fr/" target="_blank">ici<a>. 
+    </p>
+    <center>
+    <script type="text/javascript" src="https://cdnjs.buymeacoffee.com/1.0.0/button.prod.min.js" data-name="bmc-button" data-slug="garcia31bej" data-color="#232730" data-emoji="☕"  data-font="Cookie" data-text="Buy me a coffee" data-outline-color="#ffffff" data-font-color="#ffffff" data-coffee-color="#FFDD00" ></script>
+    </center>
+    </div>
+
+</div>   
+
+ 
 
 
   </body>
