@@ -9,6 +9,7 @@ html{
 } 
 
 nav{
+    
     height: 60px;
     background-color: var(--text-color);
     display: flex;
@@ -17,6 +18,7 @@ nav{
 }
 
 .links-container{
+
     height: 100%;
     width: 100%;
     display: flex;
@@ -96,8 +98,8 @@ nav a:hover{
 }
 
 .dropdown-menu .placeholder{
-    color: rgba(255, 255, 255, 0.6);
-    cursor: not-allowed;
+    color: var(--bg-color);
+    cursor: pointer;
 }
 
 .dropdown:hover .dropdown-menu,

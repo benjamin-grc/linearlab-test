@@ -31,12 +31,35 @@ h2{
   color: var(--text-color);
 }
 
+.actu{
+  border: solid 2px black;
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  margin: 2rem auto;
+  max-width: 70%; /* limite largeur pour meilleure lisibilité */
+  width: 70%;
+  padding: 10px;
+  gap: 2rem;
+}
+
+.actu h3{
+  font-size: 34px;
+  color: var(--text-color);
+  text-align: left;
+}
+
+.actu ul{
+  font-size: 18px;
+  margin-left: 20px;
+}
+
 .main-text{
   border: solid 2px black;
   border-radius: 12px;
   display: flex;
   flex-direction: column;
-  margin: 5rem auto;
+  margin: 2rem auto;
   max-width: 70%; /* limite largeur pour meilleure lisibilité */
   padding: 10px;
   gap: 2rem;
@@ -55,3 +78,4 @@ h2{
   justify-content: center;
   text-align: justify;
 }
+

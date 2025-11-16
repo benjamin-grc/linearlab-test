@@ -1,9 +1,9 @@
 :root {
 
-    --bg-color: #d5def5;
-    --text-color: #430f58;
-    --btn-color: #8594e4;
-    --btn-hcolor: #6643b5;
+    --bg-color: #EEEEEE;
+    --text-color: #222831;
+    --btn-color: #76ABAE;
+    --btn-hcolor: #31363F;
 
     --font-family : 'Ubuntu', sans-serif;
 
@@ -17,4 +17,12 @@
     --btn-color: #0f4c75;
     --btn-hcolor: #3282b8;
 
+    }
+
+footer {
+    color: var(--text-color);
+    text-align: center;
+    bottom: 0;
+    left: 0;
+    padding: 10px;
     }

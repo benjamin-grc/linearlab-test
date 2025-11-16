@@ -1,0 +1,10 @@
+body {
+
+    background-color: var(--bg-color);
+    min-height: 100vh; /* s’adapte à la taille écran */
+    font-family: var(--font-family), monospace;
+  }
+  
+
+  
+  
