@@ -101,3 +101,15 @@ table {
   }
   
 
+.explanation{
+  font-family: var(--font-family);
+  margin: 40px auto;   /* centre horizontalement */
+  max-width: 800px;
+  padding: 20px;
+  color: var(--text-color);
+}
+
+.explanation p{
+  font-size: 20px;
+}
+

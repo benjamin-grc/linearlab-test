@@ -280,7 +280,7 @@ function solveSystem() {
   }
 
   // cas : infinité de solutions
-  out += "♾ Le système admet une infinité de solutions.\n\n";
+  out += "Le système admet une infinité de solutions.\n\n";
 
   const pivotColForRow = Array(m).fill(-1);
   const isPivotCol = Array(n).fill(false);
