@@ -3,12 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>LinearLab</title>
+    <title>Calculatrice matricielle • LinearLab</title>
 
-    <!-- Feuille de styles -->
     <link href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="../assets/css/matrixcalc.css" />
     <link rel="stylesheet" href="../assets/css/themes.css" />
+    <link rel="stylesheet" href="../assets/css/matrixcalc.css" />
     <link rel="stylesheet" href="../assets/css/navbar.css" />
 </head>
 <body>
@@ -21,8 +20,8 @@
         <div class="links-container">
             <label for="sidebar-active" class="close-sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" height="32px" viewBox="0 -960 960 960" width="32px" fill="#e3e3e3"><path d="m256-200-56-56 224-224-224-224 56-56 224 224 224-224 56 56-224 224 224 224-56 56-224-224-224 224Z"/></svg>
             </label>
-            
-            <a class="home-link " href="../index.html"> Menu </a>
+
+            <a class="home-link" href="../index.html"> Menu </a>
             <a href="#"> Théorie </a>
             <a href="../pages/solveur.html"> Solveur </a>
             <div class="dropdown">
@@ -31,8 +30,8 @@
                     <span class="chevron" aria-hidden="true"></span>
                 </button>
                 <div class="dropdown-menu" role="menu">
-                    <a class="dropdown-item placeholder"  href="">Calculatrice matricielle (bientôt)</a>
-                    <a class="dropdown-item placeholder"  >Visualisation de vecteurs (bientôt)</a>
+                    <a class="dropdown-item"  href="matrixcalc.html">Calculatrice matricielle</a>
+                    <span class="dropdown-item placeholder" aria-disabled="true">Visualisation de vecteurs (bientôt)</span>
                 </div>
             </div>
             <a href="# "> À propos </a>
@@ -40,12 +39,100 @@
         </div>
     </nav>
 
+    <main class="matrixcalc-page">
+        <section class="intro">
+            <p class="eyebrow">Nouvel outil</p>
+            <h1>Calculatrice matricielle</h1>
+            <p>
+                Composez vos matrices, choisissez une opération et obtenez instantanément la réponse.
+                L'outil gère les opérations courantes (déterminant, addition, produit, transposée et décomposition LU)
+                et vous guide lorsque les dimensions doivent être adaptées.
+            </p>
+        </section>
 
+        <section class="calculator" aria-live="polite">
+            <div class="calculator-header">
+                <label class="select-label" for="operation">Opération à effectuer</label>
+                <select id="operation">
+                    <option value="determinant">Déterminant</option>
+                    <option value="addition">Addition</option>
+                    <option value="multiplication">Multiplication</option>
+                    <option value="transpose">Transposée</option>
+                    <option value="lu">Décomposition LU</option>
+                </select>
+                <button id="example" type="button" class="ghost">Remplir avec un exemple</button>
+            </div>
 
+            <div class="matrix-settings">
+                <div class="matrix-control">
+                    <div class="matrix-control__title">
+                        <h3>Matrice A</h3>
+                        <span id="matrixAInfo" class="hint"></span>
+                    </div>
+                    <label>
+                        Lignes
+                        <input type="number" id="rowsA" value="3" min="1" max="6">
+                    </label>
+                    <label>
+                        Colonnes
+                        <input type="number" id="colsA" value="3" min="1" max="6">
+                    </label>
+                </div>
+
+                <div class="matrix-control" id="matrixBSettings">
+                    <div class="matrix-control__title">
+                        <h3>Matrice B</h3>
+                        <span id="matrixBInfo" class="hint"></span>
+                    </div>
+                    <label>
+                        Lignes
+                        <input type="number" id="rowsB" value="3" min="1" max="6">
+                    </label>
+                    <label>
+                        Colonnes
+                        <input type="number" id="colsB" value="3" min="1" max="6">
+                    </label>
+                </div>
+            </div>
+
+            <div class="matrices">
+                <div class="matrix-block">
+                    <div class="matrix-block__header">
+                        <h4>Entrer la matrice A</h4>
+                        <button type="button" class="ghost small" data-fill="matrixA">Aléatoire</button>
+                    </div>
+                    <div class="matrix-grid" id="matrixA"></div>
+                </div>
+                <div class="matrix-block" id="matrixBBlock">
+                    <div class="matrix-block__header">
+                        <h4>Entrer la matrice B</h4>
+                        <button type="button" class="ghost small" data-fill="matrixB">Aléatoire</button>
+                    </div>
+                    <div class="matrix-grid" id="matrixB"></div>
+                </div>
+            </div>
+
+            <div class="actions">
+                <button id="compute" type="button">Calculer</button>
+                <p class="help" id="operationHelp"></p>
+            </div>
+
+            <div class="result" id="result"></div>
+        </section>
+
+        <section class="notes">
+            <h2>Comment ça marche ?</h2>
+            <ul>
+                <li>Le déterminant et la décomposition LU nécessitent une matrice carrée.</li>
+                <li>Pour l'addition, les deux matrices doivent partager les mêmes dimensions.</li>
+                <li>Pour la multiplication, le nombre de colonnes de A doit être égal au nombre de lignes de B.</li>
+                <li>La transposée modifie uniquement la matrice A.</li>
+            </ul>
+        </section>
+    </main>
 </body>
 <footer>
     <small>Copyright ©<a href="https://benjamingarcia.fr/" target="_blank">Benjamin Garica</a> 2025 linearlab.fr. Tous droits réservés.</small>
 </footer>
-
+<script src="../assets/js/matrixcalc.js" type="module"></script>
 </html>
-
