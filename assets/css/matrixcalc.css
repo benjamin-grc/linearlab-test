@@ -64,6 +64,72 @@ input[type="number"], select {
   border-radius: 4px;
 }
 
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  border: 0;
+}
+
+.operation-field {
+  flex-direction: column;
+  gap: 12px;
+}
+
+.operation-label-group {
+  color: var(--text-color);
+}
+
+.operation-hint {
+  font-size: 13px;
+  opacity: 0.8;
+  margin: 4px 0 0;
+}
+
+.operation-picker {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 12px;
+}
+
+.operation-card {
+  background: var(--bg-color);
+  border: 2px solid transparent;
+  border-radius: 10px;
+  padding: 12px;
+  text-align: left;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  color: var(--text-color);
+  box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+  transition: transform 0.15s ease, border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.operation-card .op-symbol {
+  font-weight: 700;
+  font-size: 1.1rem;
+}
+
+.operation-card .op-name {
+  font-size: 0.9rem;
+  opacity: 0.9;
+}
+
+.operation-card:hover {
+  transform: translateY(-2px);
+  border-color: var(--btn-color);
+}
+
+.operation-card.is-active {
+  border-color: var(--text-color);
+  box-shadow: rgba(0, 0, 0, 0.2) 0 6px 20px;
+}
+
 /* ---------- BOUTONS ---------- */
 
 button {

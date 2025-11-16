@@ -53,9 +53,12 @@
         <!-- Choix de l'opération -->
         <section aria-label="Paramètres de l'opération" class="panel">
           <form id="operation-form">
-            <div class="field-group">
-              <label for="operation-select">Opération :</label>
-              <select id="operation-select" name="operation">
+            <div class="field-group operation-field">
+              <div class="operation-label-group">
+                <label for="operation-select">Opération :</label>
+                <p class="operation-hint">Choisissez visuellement l'algèbre à appliquer.</p>
+              </div>
+              <select id="operation-select" name="operation" class="sr-only" aria-hidden="false">
                 <option value="add">A + B</option>
                 <option value="sub">A − B</option>
                 <option value="mul">A × B</option>
@@ -64,6 +67,37 @@
                 <option value="luA">LU(A)</option>
                 <option value="luB">LU(B)</option>
               </select>
+
+              <div class="operation-picker" role="listbox" aria-label="Opérations disponibles">
+                <button type="button" class="operation-card" data-operation="add">
+                  <span class="op-symbol">A + B</span>
+                  <span class="op-name">Addition</span>
+                </button>
+                <button type="button" class="operation-card" data-operation="sub">
+                  <span class="op-symbol">A − B</span>
+                  <span class="op-name">Soustraction</span>
+                </button>
+                <button type="button" class="operation-card" data-operation="mul">
+                  <span class="op-symbol">A × B</span>
+                  <span class="op-name">Produit</span>
+                </button>
+                <button type="button" class="operation-card" data-operation="detA">
+                  <span class="op-symbol">det(A)</span>
+                  <span class="op-name">Déterminant A</span>
+                </button>
+                <button type="button" class="operation-card" data-operation="detB">
+                  <span class="op-symbol">det(B)</span>
+                  <span class="op-name">Déterminant B</span>
+                </button>
+                <button type="button" class="operation-card" data-operation="luA">
+                  <span class="op-symbol">LU(A)</span>
+                  <span class="op-name">Décomp. LU A</span>
+                </button>
+                <button type="button" class="operation-card" data-operation="luB">
+                  <span class="op-symbol">LU(B)</span>
+                  <span class="op-name">Décomp. LU B</span>
+                </button>
+              </div>
             </div>
     
             <!-- Taille des matrices -->
