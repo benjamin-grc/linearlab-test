@@ -95,9 +95,17 @@ table {
   
   .result {
     margin-top: 20px;
-    font-weight: bold;
-    white-space: pre-wrap;
-    color: #222;
+    color: var(--text-color);
+    font-weight: 500;
+    font-size: 1.1rem;
+  }
+
+  .result .math-line {
+    margin-bottom: 12px;
+  }
+
+  .result .math-line:last-child {
+    margin-bottom: 0;
   }
   
 
