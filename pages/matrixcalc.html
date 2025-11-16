@@ -53,46 +53,120 @@
         <!-- Choix de l'opération -->
         <section aria-label="Paramètres de l'opération" class="panel">
           <form id="operation-form">
-            <div class="field-group">
-              <label for="operation-select">Opération :</label>
-              <select id="operation-select" name="operation">
-                <option value="add">A + B</option>
-                <option value="sub">A − B</option>
-                <option value="mul">A × B</option>
-                <option value="detA">det(A)</option>
-                <option value="detB">det(B)</option>
-                <option value="luA">LU(A)</option>
-                <option value="luB">LU(B)</option>
-              </select>
+            <div class="operation-selector" role="group" aria-label="Choisir une opération">
+              <div class="operation-group">
+                <h3>Combinaisons</h3>
+                <div class="operation-options">
+                  <label class="operation-card" for="op-add">
+                    <input type="radio" id="op-add" name="operation" value="add" checked>
+                    <span class="operation-symbol">A + B</span>
+                    <span class="operation-description">Addition matricielle</span>
+                  </label>
+                  <label class="operation-card" for="op-sub">
+                    <input type="radio" id="op-sub" name="operation" value="sub">
+                    <span class="operation-symbol">A − B</span>
+                    <span class="operation-description">Soustraction matricielle</span>
+                  </label>
+                  <label class="operation-card" for="op-mul">
+                    <input type="radio" id="op-mul" name="operation" value="mul">
+                    <span class="operation-symbol">A × B</span>
+                    <span class="operation-description">Produit matriciel</span>
+                  </label>
+                </div>
+              </div>
+
+              <div class="operation-group">
+                <h3>Opérations sur une matrice</h3>
+                <div class="operation-options">
+                  <label class="operation-card" for="op-detA">
+                    <input type="radio" id="op-detA" name="operation" value="detA">
+                    <span class="operation-symbol">det(A)</span>
+                    <span class="operation-description">Déterminant de A</span>
+                  </label>
+                  <label class="operation-card" for="op-detB">
+                    <input type="radio" id="op-detB" name="operation" value="detB">
+                    <span class="operation-symbol">det(B)</span>
+                    <span class="operation-description">Déterminant de B</span>
+                  </label>
+                  <label class="operation-card" for="op-luA">
+                    <input type="radio" id="op-luA" name="operation" value="luA">
+                    <span class="operation-symbol">LU(A)</span>
+                    <span class="operation-description">Décomposition LU de A</span>
+                  </label>
+                  <label class="operation-card" for="op-luB">
+                    <input type="radio" id="op-luB" name="operation" value="luB">
+                    <span class="operation-symbol">LU(B)</span>
+                    <span class="operation-description">Décomposition LU de B</span>
+                  </label>
+                </div>
+              </div>
             </div>
-    
+
             <!-- Taille des matrices -->
-            <div class="field-group">
-              <fieldset>
-                <legend>Taille de A</legend>
-                <label>
-                  Lignes :
-                  <input type="number" id="rows-A" name="rowsA" min="1" max="10" value="3" />
-                </label>
-                <label>
-                  Colonnes :
-                  <input type="number" id="cols-A" name="colsA" min="1" max="10" value="3" />
-                </label>
-              </fieldset>
-    
-              <fieldset id="size-B-fieldset">
-                <legend>Taille de B</legend>
-                <label>
-                  Lignes :
-                  <input type="number" id="rows-B" name="rowsB" min="1" max="10" value="3" />
-                </label>
-                <label>
-                  Colonnes :
-                  <input type="number" id="cols-B" name="colsB" min="1" max="10" value="3" />
-                </label>
-              </fieldset>
+            <div class="size-selector" aria-label="Choisir la taille des matrices">
+              <div class="size-card" id="size-A-card">
+                <h3>Matrice A</h3>
+                <div class="dimension-controls">
+                  <div class="dimension-control">
+                    <div class="dimension-label">
+                      <label for="rows-A">Lignes</label>
+                      <span class="dimension-value" data-range-display="rows-A">3</span>
+                    </div>
+                    <input type="range" id="rows-A" name="rowsA" min="1" max="10" value="3" step="1">
+                    <div class="dimension-scale" aria-hidden="true">
+                      <span>1</span>
+                      <span>5</span>
+                      <span>10</span>
+                    </div>
+                  </div>
+
+                  <div class="dimension-control">
+                    <div class="dimension-label">
+                      <label for="cols-A">Colonnes</label>
+                      <span class="dimension-value" data-range-display="cols-A">3</span>
+                    </div>
+                    <input type="range" id="cols-A" name="colsA" min="1" max="10" value="3" step="1">
+                    <div class="dimension-scale" aria-hidden="true">
+                      <span>1</span>
+                      <span>5</span>
+                      <span>10</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              <div class="size-card" id="size-B-card">
+                <h3>Matrice B</h3>
+                <div class="dimension-controls">
+                  <div class="dimension-control">
+                    <div class="dimension-label">
+                      <label for="rows-B">Lignes</label>
+                      <span class="dimension-value" data-range-display="rows-B">3</span>
+                    </div>
+                    <input type="range" id="rows-B" name="rowsB" min="1" max="10" value="3" step="1">
+                    <div class="dimension-scale" aria-hidden="true">
+                      <span>1</span>
+                      <span>5</span>
+                      <span>10</span>
+                    </div>
+                  </div>
+
+                  <div class="dimension-control">
+                    <div class="dimension-label">
+                      <label for="cols-B">Colonnes</label>
+                      <span class="dimension-value" data-range-display="cols-B">3</span>
+                    </div>
+                    <input type="range" id="cols-B" name="colsB" min="1" max="10" value="3" step="1">
+                    <div class="dimension-scale" aria-hidden="true">
+                      <span>1</span>
+                      <span>5</span>
+                      <span>10</span>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
-    
+
             <button type="button" id="update-matrices-btn">
               Mettre à jour les matrices
             </button>
