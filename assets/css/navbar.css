@@ -52,7 +52,8 @@ nav svg{
 .open-sidebar-button, .close-sidebar-button{
     display: none;
 }
- 
+
+
 @media(max-width: 630px){
     .links-container{
         flex-direction: column;
@@ -96,5 +97,4 @@ nav svg{
     }
 
 }
-
 
