@@ -89,9 +89,15 @@ nav a:hover{
     z-index: 15;
 }
 
-.dropdown-menu a{
+.dropdown-menu a,
+.dropdown-menu .dropdown-item{
     height: auto;
     padding: 12px 20px;
+}
+
+.dropdown-menu .placeholder{
+    color: rgba(255, 255, 255, 0.6);
+    cursor: not-allowed;
 }
 
 .dropdown:hover .dropdown-menu,
