@@ -148,6 +148,7 @@ nav svg{
 
     .dropdown{
         width: 100%;
+        flex-direction: column;
     }
 
     .dropdown-toggle{
@@ -158,6 +159,7 @@ nav svg{
     .dropdown-menu{
         position: static;
         width: 100%;
+        min-width: 0;
         box-shadow: none;
     }
 
