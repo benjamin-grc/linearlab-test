@@ -3,13 +3,43 @@ const EPS = 1e-10;
 let coeffInputs = [];
 let rhsInputs = [];
 
-// Convertit un nombre en fraction "p/q"
-function fractionString(x) {
+// Convertit un nombre en LaTeX (fraction si nécessaire)
+function fractionLatex(x) {
   try {
     const f = math.fraction(x);
-    return f.d === 1 ? `${f.n}` : `${f.n}/${f.d}`;
+    return f.d === 1 ? `${f.n}` : `\\frac{${f.n}}{${f.d}}`;
   } catch {
     return `${x}`;
+  }
+}
+
+function approxString(value) {
+  if (!isFinite(value)) return value.toString();
+  return Number(value.toFixed(4)).toString();
+}
+
+function latexText(str) {
+  return str.replace(/([{}])/g, "\\$1");
+}
+
+function alignedLatex(lines) {
+  if (!lines.length) return "";
+  return `\\begin{aligned} ${lines.join(" \\\\ ")} \\end{aligned}`;
+}
+
+function displayLatex(lines) {
+  const result = document.getElementById("result");
+  if (!result) return;
+
+  const blocks = lines
+    .filter(line => !!line)
+    .map(line => `<div class="math-line">\\[${line}\\]</div>`)
+    .join("");
+
+  result.innerHTML = blocks || "";
+
+  if (window.MathJax && typeof MathJax.typesetPromise === "function") {
+    MathJax.typesetPromise([result]).catch(err => console.error(err));
   }
 }
 
@@ -106,46 +136,33 @@ function generateExample() {
   if (resultDiv) resultDiv.textContent = "";
 }
 
-// Formate une expression symbolique (constante + somme coeff * xk)
-function formatExpr(expr) {
-  let parts = [];
+// Formate une expression symbolique pour LaTeX (constante + somme coeff * xk)
+function formatExprLatex(expr) {
+  const parts = [];
   let first = true;
 
-  // constante
   if (Math.abs(expr.constant) > EPS) {
     const val = expr.constant;
     const absVal = Math.abs(val);
-    const coeffStr = fractionString(absVal);
     const signStr = val < 0 ? "-" : "";
-    parts.push(signStr + coeffStr);
+    parts.push(`${signStr}${fractionLatex(absVal)}`);
     first = false;
   }
 
-  // termes en xk
   const vars = Object.keys(expr.deps).sort();
   for (const v of vars) {
-    let c = expr.deps[v];
-    if (Math.abs(c) < EPS) continue;
+    const coeff = expr.deps[v];
+    if (Math.abs(coeff) < EPS) continue;
 
-    const isNeg = c < 0;
-    const absC = Math.abs(c);
+    const isNeg = coeff < 0;
+    const absCoeff = Math.abs(coeff);
+    const needsCoeff = Math.abs(absCoeff - 1) >= EPS;
 
-    let signStr;
-    if (first) {
-      signStr = isNeg ? "-" : "";
-    } else {
-      signStr = isNeg ? " - " : " + ";
-    }
+    const signStr = first ? (isNeg ? "-" : "") : (isNeg ? " - " : " + ");
+    const coeffStr = needsCoeff ? `${fractionLatex(absCoeff)}\\,` : "";
+    const varLatex = v.replace(/x(\d+)/, "x_{$1}");
 
-    let coeffStr = "";
-    if (Math.abs(absC - 1) < EPS) {
-      // 1 ou -1 -> signe seulement
-      coeffStr = "";
-    } else {
-      coeffStr = fractionString(absC) + "*";
-    }
-
-    parts.push(signStr + coeffStr + v);
+    parts.push(`${signStr}${coeffStr}${varLatex}`);
     first = false;
   }
 
@@ -238,19 +255,20 @@ function solveSystem() {
     if (nzAug) rankAug++;
   }
 
-  let out = "";
-  out += `rang(A) = ${rankA}\n`;
-  out += `rang(A|b) = ${rankAug}\n\n`;
+  const latexLines = [];
+  latexLines.push(`\\operatorname{rang}(A) = ${rankA}`);
+  latexLines.push(`\\operatorname{rang}(A\\mid b) = ${rankAug}`);
 
   // cas : aucune solution
   if (rankAug > rankA) {
-    result.textContent = out + "❌ Le système est incompatible : aucune solution.";
+    latexLines.push(`\\text{${latexText("Le système est incompatible : aucune solution.")}}`);
+    displayLatex(latexLines);
     return;
   }
 
   // cas : solution unique (rangA = n)
   if (rankA === n) {
-    out += "✅ Le système admet une solution unique.\n\n";
+    latexLines.push(`\\text{${latexText("Le système admet une solution unique.")}}`);
 
     let x = Array(n).fill(0);
 
@@ -271,16 +289,18 @@ function solveSystem() {
       x[pivotCol] = sum / A[i][pivotCol];
     }
 
+    const solutionLines = [];
     for (let j = 0; j < n; j++) {
-      out += `x${j + 1} = ${fractionString(x[j])}  (≈ ${x[j]})\n`;
+      solutionLines.push(`x_{${j + 1}} = ${fractionLatex(x[j])}\\quad (\\approx ${approxString(x[j])})`);
     }
 
-    result.textContent = out;
+    latexLines.push(alignedLatex(solutionLines));
+    displayLatex(latexLines);
     return;
   }
 
   // cas : infinité de solutions
-  out += "Le système admet une infinité de solutions.\n\n";
+  latexLines.push(`\\text{${latexText("Le système admet une infinité de solutions.")}}`);
 
   const pivotColForRow = Array(m).fill(-1);
   const isPivotCol = Array(n).fill(false);
@@ -301,9 +321,8 @@ function solveSystem() {
   }
 
   if (freeCols.length > 0) {
-    out += "Variables libres :\n";
-    freeCols.forEach(c => out += `  x${c + 1} libre\n`);
-    out += "\n";
+    const freeLines = freeCols.map(c => `x_{${c + 1}} \\text{ libre}`);
+    latexLines.push(alignedLatex(freeLines));
   }
 
   // expr[j] = { constant, deps: { "xk": coeff } }
@@ -347,12 +366,13 @@ function solveSystem() {
   }
 
   // affichage des xj
+  const exprLines = [];
   for (let j = 0; j < n; j++) {
-    const formatted = formatExpr(expr[j]);
-    out += `x${j + 1} = ${formatted}\n`;
+    exprLines.push(`x_{${j + 1}} = ${formatExprLatex(expr[j])}`);
   }
 
-  result.textContent = out;
+  latexLines.push(alignedLatex(exprLines));
+  displayLatex(latexLines);
 }
 
 // Générer un système au chargement (si m et n existent déjà)
