@@ -27,6 +27,23 @@ function alignedLatex(lines) {
   return `\\begin{aligned} ${lines.join(" \\\\ ")} \\end{aligned}`;
 }
 
+function alignedEqualsLatex(lines) {
+  if (!lines.length) return "";
+
+  const processed = lines.map(line => {
+    const idx = line.indexOf("=");
+    if (idx === -1) {
+      return `&${line}`;
+    }
+
+    const left = line.slice(0, idx).trim();
+    const right = line.slice(idx + 1).trim();
+    return `${left} &= ${right}`;
+  });
+
+  return alignedLatex(processed);
+}
+
 function displayLatex(lines) {
   const result = document.getElementById("result");
   if (!result) return;
@@ -294,7 +311,7 @@ function solveSystem() {
       solutionLines.push(`x_{${j + 1}} = ${fractionLatex(x[j])}\\quad (\\approx ${approxString(x[j])})`);
     }
 
-    latexLines.push(alignedLatex(solutionLines));
+    latexLines.push(alignedEqualsLatex(solutionLines));
     displayLatex(latexLines);
     return;
   }
@@ -371,7 +388,7 @@ function solveSystem() {
     exprLines.push(`x_{${j + 1}} = ${formatExprLatex(expr[j])}`);
   }
 
-  latexLines.push(alignedLatex(exprLines));
+  latexLines.push(alignedEqualsLatex(exprLines));
   displayLatex(latexLines);
 }
 
