@@ -27,6 +27,7 @@ nav{
 }
 
 nav a{
+    border-radius: 8px;
     height: 100%;
     padding: 0 20px;
     display: flex;
@@ -37,6 +38,7 @@ nav a{
 
 nav a:hover{
     background-color: var(--btn-color);
+    color: var(--text-color);
 }
 
 .dropdown{
