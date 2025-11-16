@@ -37,6 +37,68 @@ nav a:hover{
     background-color: var(--btn-color);
 }
 
+.dropdown{
+    position: relative;
+    height: 100%;
+    display: flex;
+    align-items: stretch;
+}
+
+.dropdown-toggle{
+    background: transparent;
+    border: none;
+    color: var(--bg-color);
+    font: inherit;
+    height: 100%;
+    padding: 0 20px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    cursor: pointer;
+}
+
+.dropdown-toggle:hover,
+.dropdown-toggle:focus-visible{
+    background-color: var(--btn-color);
+    outline: none;
+}
+
+.chevron{
+    border: solid var(--bg-color);
+    border-width: 0 2px 2px 0;
+    display: inline-block;
+    padding: 3px;
+    transform: rotate(45deg);
+    transition: transform 0.2s ease;
+}
+
+.dropdown:hover .chevron,
+.dropdown:focus-within .chevron{
+    transform: rotate(-135deg);
+}
+
+.dropdown-menu{
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    background-color: var(--text-color);
+    min-width: 210px;
+    box-shadow: 0 8px 12px rgba(0, 0, 0, 0.25);
+    flex-direction: column;
+    z-index: 15;
+}
+
+.dropdown-menu a{
+    height: auto;
+    padding: 12px 20px;
+}
+
+.dropdown:hover .dropdown-menu,
+.dropdown:focus-within .dropdown-menu{
+    display: flex;
+}
+
 nav .home-link{
     margin-right: auto;
 }
@@ -76,6 +138,21 @@ nav svg{
         width: 100%;
         padding: 20px 30px;
         justify-content: flex-start;
+    }
+
+    .dropdown{
+        width: 100%;
+    }
+
+    .dropdown-toggle{
+        width: 100%;
+        justify-content: space-between;
+    }
+
+    .dropdown-menu{
+        position: static;
+        width: 100%;
+        box-shadow: none;
     }
 
     .open-sidebar-button, .close-sidebar-button{
