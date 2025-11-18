@@ -10,12 +10,12 @@ body {
 .box-container {
     margin-left: 50px;
     margin-right: 50px;
-    min-height: 700px;
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
-    align-items: center;
-    row-gap: 0px;   /* espace vertical */
+    align-items: flex-start;
+    align-content: flex-start; /* évite un étirement vertical inutile */
+    row-gap: 8px;   /* espace vertical réduit entre les lignes */
     column-gap: 3px; /* espace horizontal */
 }
 
