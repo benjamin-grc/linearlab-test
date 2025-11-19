@@ -1,23 +1,33 @@
 // assets/js/matcalc.js
 
+function getSelectedOperation() {
+  const selected = document.querySelector('input[name="operation"]:checked');
+  return selected ? selected.value : null;
+}
+
 function updateMatrices() {
     const rowsA = parseInt(document.getElementById("rows-A")?.value, 10) || 1;
     const colsA = parseInt(document.getElementById("cols-A")?.value, 10) || 1;
     const rowsB = parseInt(document.getElementById("rows-B")?.value, 10) || 1;
     const colsB = parseInt(document.getElementById("cols-B")?.value, 10) || 1;
-  
+
     // Crée A
     createMatrix("matrix-A", rowsA, colsA);
-  
+
     // Gère l'affichage de B selon l’opération
-    const op = document.getElementById("operation-select")?.value;
+    const op = getSelectedOperation();
     const matrixBContainer = document.getElementById("matrix-B-container");
+    const sizeBCard = document.getElementById("size-B-card");
     const needB = !(op === "detA" || op === "luA"); // ex: pas besoin de B pour det(A), LU(A)
-  
+
     if (matrixBContainer) {
       matrixBContainer.style.display = needB ? "" : "none";
     }
-  
+
+    if (sizeBCard) {
+      sizeBCard.style.display = needB ? "" : "none";
+    }
+
     if (needB) {
       createMatrix("matrix-B", rowsB, colsB);
     }
@@ -28,7 +38,7 @@ function updateMatrices() {
     renderScalar("result-scalar", "");
     renderMatrix("result-matrix", []); // efface éventuellement l'ancienne matrice (optionnel)
   
-    const op = document.getElementById("operation-select")?.value;
+    const op = getSelectedOperation();
     if (!op) return;
   
     try {
@@ -126,7 +136,7 @@ function updateMatrices() {
   
     // Mise à jour automatique quand on change tailles / opération
     const sizeInputs = document.querySelectorAll(
-      "#rows-A, #cols-A, #rows-B, #cols-B, #operation-select"
+      "#rows-A, #cols-A, #rows-B, #cols-B"
     );
 
     sizeInputs.forEach((input) => {
@@ -134,26 +144,46 @@ function updateMatrices() {
       input.addEventListener("input", updateMatrices);
     });
 
-    document.getElementById("operation-select").addEventListener("change", () => {
-        updateMatrices(); 
+    document.querySelectorAll('input[name="operation"]').forEach((input) => {
+      input.addEventListener("change", () => {
+        updateMatrices();
         toggleLUVisibility();
       });
-      
-  
+    });
+
+    initDimensionDisplays();
+
     // Génère une première fois les matrices
     updateMatrices();
     toggleLUVisibility();
   });
-  
+
 
   function toggleLUVisibility() {
-    const op = document.getElementById("operation-select").value;
+    const op = getSelectedOperation();
     const luBlock = document.getElementById("result-lu");
-  
+
     if (op === "luA" || op === "luB") {
       luBlock.style.display = "block"; // montrer le LU
     } else {
       luBlock.style.display = "none";  // cacher le LU
     }
+  }
+
+  function initDimensionDisplays() {
+    document.querySelectorAll("[data-range-display]").forEach((display) => {
+      const inputId = display.getAttribute("data-range-display");
+      const input = document.getElementById(inputId);
+
+      if (!input) return;
+
+      const updateDisplay = () => {
+        display.textContent = input.value;
+      };
+
+      input.addEventListener("input", updateDisplay);
+      input.addEventListener("change", updateDisplay);
+      updateDisplay();
+    });
   }
   
