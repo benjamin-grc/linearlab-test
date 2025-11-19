@@ -135,16 +135,18 @@ function updateMatrices() {
     });
 
     document.getElementById("operation-select").addEventListener("change", () => {
-        updateMatrices(); 
+        updateMatrices();
         toggleLUVisibility();
       });
-      
-  
+
+    initOperationPicker();
+
+
     // Génère une première fois les matrices
     updateMatrices();
     toggleLUVisibility();
   });
-  
+
 
   function toggleLUVisibility() {
     const op = document.getElementById("operation-select").value;
@@ -155,5 +157,34 @@ function updateMatrices() {
     } else {
       luBlock.style.display = "none";  // cacher le LU
     }
+  }
+
+  function initOperationPicker() {
+    const select = document.getElementById("operation-select");
+    const cards = document.querySelectorAll(".operation-card");
+
+    if (!select || cards.length === 0) return;
+
+    const setActiveCard = (value) => {
+      cards.forEach((card) => {
+        const isActive = card.dataset.operation === value;
+        card.classList.toggle("is-active", isActive);
+        card.setAttribute("aria-pressed", isActive);
+      });
+    };
+
+    cards.forEach((card) => {
+      card.addEventListener("click", () => {
+        const opValue = card.dataset.operation;
+        if (!opValue) return;
+
+        select.value = opValue;
+        select.dispatchEvent(new Event("change", { bubbles: true }));
+        setActiveCard(opValue);
+      });
+    });
+
+    select.addEventListener("change", () => setActiveCard(select.value));
+    setActiveCard(select.value);
   }
   
