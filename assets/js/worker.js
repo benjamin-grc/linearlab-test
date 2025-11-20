@@ -130,7 +130,7 @@ self.onmessage = function (e) {
     });
 
   } catch (err) {
-    // En cas d'erreur (matrice non inversible, dimensions incompatibles, etc.)
+    // En cas d'erreur (matrice non inversible par exemple)
     postMessage({
       ok: false,
       op,

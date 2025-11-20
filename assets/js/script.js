@@ -145,7 +145,6 @@ function buildMatrixFromArray(matrixId, data) {
   for (let i = 0; i < rows; i++) {
     html += '<tr>';
     for (let j = 0; j < cols; j++) {
-      // adapte l’id si ton script actuel utilise un autre format
       html += `<td><input type="text" inputmode="decimal" id="${matrixId}_${i}_${j}" value="${data[i][j]}"></td>`;
 
     }
@@ -204,7 +203,7 @@ function texMatResult(label, matrix) {
 
 // Formate un nombre (ou fraction math.js) en LaTeX, avec fraction si possible
 function formatEntryForLatex(x) {
-  // Si l'utilisateur ne veut PAS les fractions → décimal direct
+  // Si l'utilisateur ne veut PAS les fractions alors décimal direct
   if (!useFractions) {
     if (typeof x === "number") {
       return math.format(x, { notation: "fixed", precision: 4 });
@@ -246,9 +245,6 @@ function toggleFractions() {
   const btn = document.getElementById("toggleFractionBtn");
   btn.textContent = "Fractions : " + (useFractions ? "ON" : "OFF");
 
-  // Re-render les résultats si tu veux automatiquement
-  // refreshResults();  // Optionnel
-}
 
 
 
@@ -299,7 +295,7 @@ function generateB() {
 function parseCell(str) {
   if (str == null) return NaN;
   str = String(str).trim();
-  if (str === '') return 0; // case vide -> 0, à adapter si besoin
+  if (str === '') return 0; // case vide alors 0, à adapter si besoin
 
   // On tente d'utiliser math.js si disponible pour gérer des expressions comme "1/4"
   if (typeof math !== 'undefined' && math.evaluate) {
