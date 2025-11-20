@@ -53,7 +53,7 @@ if (window.Worker) {
 
       case "lu":
         // ici result = { L, U }
-        lastResultMatrix = result.U; // au choix, tu peux garder L ou U
+        lastResultMatrix = result.U; 
         texMatResult("L", result.L);
         texMatResult("U", result.U);
         break;
@@ -145,7 +145,6 @@ function buildMatrixFromArray(matrixId, data) {
   for (let i = 0; i < rows; i++) {
     html += '<tr>';
     for (let j = 0; j < cols; j++) {
-      // adapte l’id si ton script actuel utilise un autre format
       html += `<td><input type="text" inputmode="decimal" id="${matrixId}_${i}_${j}" value="${data[i][j]}"></td>`;
 
     }
@@ -204,7 +203,7 @@ function texMatResult(label, matrix) {
 
 // Formate un nombre (ou fraction math.js) en LaTeX, avec fraction si possible
 function formatEntryForLatex(x) {
-  // Si l'utilisateur ne veut PAS les fractions → décimal direct
+  // Si l'utilisateur ne veut PAS les fractions alors décimal direct
   if (!useFractions) {
     if (typeof x === "number") {
       return math.format(x, { notation: "fixed", precision: 4 });
@@ -246,8 +245,6 @@ function toggleFractions() {
   const btn = document.getElementById("toggleFractionBtn");
   btn.textContent = "Fractions : " + (useFractions ? "ON" : "OFF");
 
-  // Re-render les résultats si tu veux automatiquement
-  // refreshResults();  // Optionnel
 }
 
 
