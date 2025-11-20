@@ -52,101 +52,130 @@
         </div>
     </nav>
 
-    <div class="matrix-container">
-      <div class="matA">
-        <input type="number" id="liA"> lignes
-        <input type="number" id="clA"> colonnes 
-        <br>
-        <button onclick="generateA()">Generer</button>
-    
-          <br>
-      <button onclick="toggleTextMode('A')">Saisie texte</button>
-    
-      <div id="textA" style="display:none; margin-top:8px;">
-        <textarea id="textareaA" rows="4" cols="25"
-          placeholder="1 1 1&#10;2 2 3&#10;1 4 2"></textarea>
-        <br>
-        <button onclick="applyTextMatrix('A')">Charger cette matrice</button>
-      </div>
-    
-    
-        <h3>Matrices A</h3>
-        <p id="matA"></p> 
-      </div>
-    
-      <div class="matA">
-        <input type="number" id="liB"> lignes
-        <input type="number" id="clB"> colonnes 
-        <br>
-        <button onclick="generateB()">Generer</button>
-    
-          <br>
-      <button onclick="toggleTextMode('B')">Saisie texte</button>
-    
-      <div id="textB" style="display:none; margin-top:8px;">
-        <textarea id="textareaB" rows="4" cols="25"
-          placeholder="1 1 1&#10;2 2 3&#10;1 4 2"></textarea>
-        <br>
-        <button onclick="applyTextMatrix('B')">Charger cette matrice</button>
-      </div>
-    
-        <h3>Matrices B</h3>
-        <p id="matB"></p> 
-      </div>
-    </div>
-    
-    
-    
-      <div class="fonction">
-        <h3>Fonction</h2>
+    <main class="page">
+      <header class="page-header">
+        <h1 class="page-title">Calculatrice matricielle</h1>
+        <p class="page-subtitle">Construisez vos matrices A et B puis appliquez vos opérations favorites.</p>
+      </header>
+
+      <section class="panel">
+        <h2 class="section-title">Matrices</h2>
+        <div class="matrix-container">
+          <div class="matA card">
+            <div class="field-row">
+              <label class="field">
+                <span>Lignes</span>
+                <input type="number" id="liA">
+              </label>
+              <label class="field">
+                <span>Colonnes</span>
+                <input type="number" id="clA">
+              </label>
+              <button class="primary" onclick="generateA()">Générer</button>
+            </div>
+
+            <button class="ghost" onclick="toggleTextMode('A')">Saisie texte</button>
+
+            <div id="textA" class="text-mode">
+              <textarea id="textareaA" rows="4" cols="25"
+                placeholder="1 1 1&#10;2 2 3&#10;1 4 2"></textarea>
+              <button class="primary" onclick="applyTextMatrix('A')">Charger cette matrice</button>
+            </div>
+
+            <h3>Matrice A</h3>
+            <p id="matA"></p>
+          </div>
+
+          <div class="matA card">
+            <div class="field-row">
+              <label class="field">
+                <span>Lignes</span>
+                <input type="number" id="liB">
+              </label>
+              <label class="field">
+                <span>Colonnes</span>
+                <input type="number" id="clB">
+              </label>
+              <button class="primary" onclick="generateB()">Générer</button>
+            </div>
+
+            <button class="ghost" onclick="toggleTextMode('B')">Saisie texte</button>
+
+            <div id="textB" class="text-mode">
+              <textarea id="textareaB" rows="4" cols="25"
+                placeholder="1 1 1&#10;2 2 3&#10;1 4 2"></textarea>
+              <button class="primary" onclick="applyTextMatrix('B')">Charger cette matrice</button>
+            </div>
+
+            <h3>Matrice B</h3>
+            <p id="matB"></p>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel fonction">
+        <div class="fonction-header">
+          <h2 class="section-title">Fonctions</h2>
           <div class="choice">
-            <h6>Opérations sur une matrice (A ou B)</h6>
+            <p>Opérations sur une matrice (A ou B)</p>
             <select id="matrixChoice">
               <option value="A">A</option>
               <option value="B">B</option>
             </select>
           </div>
-        <button onclick="inverse()">Inverser</button>
-        <button onclick="transposeL()">Transposer</button>
-        <button onclick="lu()">Décomposition LU</button>
-        <button onclick="rang()">Rang</button>
-        <button onclick="determinant()">Déterminant</button>
-        
-        <span class="powbtn">
-          <button onclick="power()" style="margin-left:0;">Puissance</button>
-          <input type="number" id="powerN" value="2" min="0" style="width:50px; margin-left:-5px;">
-        </span>
-    
-        <span class="powbtn">
-          <button onclick="matScale()" style="margin-left:0;">Multiplier par</button>
-          <input type="number" id="scale" value="2" min="0" style="width:50px; margin-left:-5px;">
-        </span>
-      
-    
-    
-        <button onclick="sum()">A+B</button>
-        <button onclick="sub()">A-B</button>
-        <button onclick="times()">A*B</button>
-    
-          <h4>Opération personnalisée</h4>
-        <input type="text" id="customOp" placeholder="Ex : A+4*B" />
-        <button onclick="customOperation()">Calculer</button>
-        <p style="font-size: 0.8em; color: #555;">
-          Utilise A et B, +, -, *, /, nombres, parenthèses…
-        </p>
-      </div>
-    
-      
-    
-      <div class="resultat">
-        <button id="toggleFractionBtn" onclick="toggleFractions()">Fractions : ON</button>
-    
-    
-        <h3>Résultat</h3>
-    
-        <button onclick="clean()">Nettoyer</button>
+        </div>
+
+        <div class="button-grid">
+          <button onclick="inverse()">Inverser</button>
+          <button onclick="transposeL()">Transposer</button>
+          <button onclick="lu()">Décomposition LU</button>
+          <button onclick="rang()">Rang</button>
+          <button onclick="determinant()">Déterminant</button>
+        </div>
+
+        <div class="inline-actions">
+          <div class="action-pair">
+            <button onclick="power()">Puissance</button>
+            <input type="number" id="powerN" value="2" min="0">
+          </div>
+
+          <div class="action-pair">
+            <button onclick="matScale()">Multiplier par</button>
+            <input type="number" id="scale" value="2" min="0">
+          </div>
+        </div>
+
+        <div class="button-grid">
+          <button onclick="sum()">A+B</button>
+          <button onclick="sub()">A-B</button>
+          <button onclick="times()">A*B</button>
+        </div>
+
+        <div class="custom-op">
+          <div class="custom-op__header">
+            <h4>Opération personnalisée</h4>
+            <p>Utilise A et B, +, -, *, /, nombres, parenthèses…</p>
+          </div>
+          <div class="custom-op__controls">
+            <input type="text" id="customOp" placeholder="Ex : A+4*B" />
+            <button onclick="customOperation()">Calculer</button>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel resultat">
+        <div class="resultat-header">
+          <h2 class="section-title">Résultats</h2>
+          <div class="resultat-controls">
+            <button id="toggleFractionBtn" onclick="toggleFractions()">Fractions : ON</button>
+            <button class="ghost" onclick="clean()">Nettoyer</button>
+          </div>
+        </div>
+
         <div id="res" class="resultat-list"></div>
-    
+      </section>
+    </main>
+
 </body>
 <footer>
     <small>Copyright ©<a href="https://benjamingarcia.fr/" target="_blank">Benjamin Garica</a> 2025 linearlab.fr. Tous droits réservés.</small>

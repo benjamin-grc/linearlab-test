@@ -73,7 +73,7 @@ function toggleTextMode(matrixId) {
   if (!div) return;
 
   const isHidden = (div.style.display === 'none' || div.style.display === '');
-  div.style.display = isHidden ? 'block' : 'none';
+  div.style.display = isHidden ? 'flex' : 'none';
 }
 
 // Lit le texte, le transforme en matrice et génère les inputs
