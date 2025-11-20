@@ -6,7 +6,7 @@ let useFractions = true; // affichage fraction par défaut
 
 
 if (window.Worker) {
-  matrixWorker = new Worker("worker.js");
+  matrixWorker = new Worker("../assets/js/worker.js");
 
   matrixWorker.onmessage = function (e) {
     const { ok, op, result, error, label } = e.data;
