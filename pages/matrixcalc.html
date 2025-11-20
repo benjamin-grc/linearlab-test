@@ -14,9 +14,13 @@
 
     <!-- Le js -->
         <!-- Librairie math.js-->
-        <script src="https://cdn.jsdelivr.net/npm/mathjs@11/lib/browser/math.js"></script>
-    <script src="../assets/js/create-mat.js"></script>
-    <script src="../assets/js/matcalc.js"></script>
+    <script id="MathJax-script" async
+      src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+    </script>
+    <script src="../assets/js/worker.js"></script>
+    <script src="../assets/js/script.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/11.11.0/math.min.js"></script>
+    <script src="//cdnjs.cloudflare.com/ajax/libs/numeral.js/2.0.6/numeral.min.js"></script>
 
 </head>
 <body>
@@ -49,117 +53,104 @@
         </div>
     </nav>
 
-    <main id="matrix-calculator">
-
-        <!-- Choix de l'opération -->
-        <section aria-label="Paramètres de l'opération" class="panel">
-          <form id="operation-form">
-            <div class="field-group">
-              <label for="operation-select">Opération :</label>
-              <select id="operation-select" name="operation">
-                <option value="add">A + B</option>
-                <option value="sub">A − B</option>
-                <option value="mul">A × B</option>
-                <option value="detA">det(A)</option>
-                <option value="detB">det(B)</option>
-                <option value="luA">LU(A)</option>
-                <option value="luB">LU(B)</option>
-              </select>
-            </div>
+    <div class="matrix-container">
+      <div class="matA">
+        <input type="number" id="liA"> lignes
+        <input type="number" id="clA"> colonnes 
+        <br>
+        <button onclick="generateA()">Generer</button>
     
-            <!-- Taille des matrices -->
-            <div class="field-group">
-              <fieldset>
-                <legend>Taille de A</legend>
-                <label>
-                  Lignes :
-                  <input type="number" id="rows-A" name="rowsA" min="1" max="10" value="3" />
-                </label>
-                <label>
-                  Colonnes :
-                  <input type="number" id="cols-A" name="colsA" min="1" max="10" value="3" />
-                </label>
-              </fieldset>
+          <br>
+      <button onclick="toggleTextMode('A')">Saisie texte</button>
     
-              <fieldset id="size-B-fieldset">
-                <legend>Taille de B</legend>
-                <label>
-                  Lignes :
-                  <input type="number" id="rows-B" name="rowsB" min="1" max="10" value="3" />
-                </label>
-                <label>
-                  Colonnes :
-                  <input type="number" id="cols-B" name="colsB" min="1" max="10" value="3" />
-                </label>
-              </fieldset>
-            </div>
+      <div id="textA" style="display:none; margin-top:8px;">
+        <textarea id="textareaA" rows="4" cols="25"
+          placeholder="1 1 1&#10;2 2 3&#10;1 4 2"></textarea>
+        <br>
+        <button onclick="applyTextMatrix('A')">Charger cette matrice</button>
+      </div>
     
-            <button type="button" id="update-matrices-btn">
-              Mettre à jour les matrices
-            </button>
-          </form>
-        </section>
     
-        <!-- Matrices d'entrée -->
-        <section aria-label="Matrices d'entrée" class="panel panel-matrices">
-          <div class="matrix-block">
-            <h2>Matrice A</h2>
-            <div id="matrix-A" class="matrix-grid">
-              <!-- JS génère ici les <input> pour A -->
-            </div>
+        <h3>Matrices A</h3>
+        <p id="matA"></p> 
+      </div>
+    
+      <div class="matA">
+        <input type="number" id="liB"> lignes
+        <input type="number" id="clB"> colonnes 
+        <br>
+        <button onclick="generateB()">Generer</button>
+    
+          <br>
+      <button onclick="toggleTextMode('B')">Saisie texte</button>
+    
+      <div id="textB" style="display:none; margin-top:8px;">
+        <textarea id="textareaB" rows="4" cols="25"
+          placeholder="1 1 1&#10;2 2 3&#10;1 4 2"></textarea>
+        <br>
+        <button onclick="applyTextMatrix('B')">Charger cette matrice</button>
+      </div>
+    
+        <h3>Matrices B</h3>
+        <p id="matB"></p> 
+      </div>
+    </div>
+    
+    
+    
+      <div class="fonction">
+        <h3>Fonction</h2>
+          <div class="choice">
+            <h6>Opérations sur une matrice (A ou B)</h6>
+            <select id="matrixChoice">
+              <option value="A">A</option>
+              <option value="B">B</option>
+            </select>
           </div>
+        <button onclick="inverse()">Inverser</button>
+        <button onclick="transposeL()">Transposer</button>
+        <button onclick="lu()">Décomposition LU</button>
+        <button onclick="rang()">Rang</button>
+        <button onclick="determinant()">Déterminant</button>
+        
+        <span class="powbtn">
+          <button onclick="power()" style="margin-left:0;">Puissance</button>
+          <input type="number" id="powerN" value="2" min="0" style="width:50px; margin-left:-5px;">
+        </span>
     
-          <div class="matrix-block" id="matrix-B-container">
-            <h2>Matrice B</h2>
-            <div id="matrix-B" class="matrix-grid">
-              <!-- JS génère ici les <input> pour B -->
-            </div>
-          </div>
-        </section>
+        <span class="powbtn">
+          <button onclick="matScale()" style="margin-left:0;">Multiplier par</button>
+          <input type="number" id="scale" value="2" min="0" style="width:50px; margin-left:-5px;">
+        </span>
+      
     
-        <!-- Bouton calcul + erreurs -->
-        <section aria-label="Lancer le calcul" class="panel">
-          <button type="button" id="compute-btn">
-            Calculer
-          </button>
-          <p id="error-message" role="alert" aria-live="polite"></p>
-        </section>
     
-        <!-- Résultat -->
-        <section aria-label="Résultat" class="panel">
-          <h2>Résultat</h2>
+        <button onclick="sum()">A+B</button>
+        <button onclick="sub()">A-B</button>
+        <button onclick="times()">A*B</button>
     
-          <!-- Résultat standard (matrice) -->
-          <div id="result-matrix" class="matrix-grid">
-            <!-- JS insère la matrice résultat -->
-          </div>
+        <h4>Opération personnalisée</h4>
+      <input type="text" id="customOp" placeholder="Ex : A+4*B" />
+      <button onclick="customOperation()">Calculer</button>
+      <p style="font-size: 0.8em; color: #555;">
+        Utilise A et B, +, -, *, /, nombres, parenthèses…
+      </p>
     
-          <!-- Résultat scalaire (ex: det(A)) -->
-          <div id="result-scalar">
-            <!-- JS insère ici les valeurs scalaires -->
-          </div>
+        <div class="opperation">
     
-        <!-- Bloc LU caché par défaut -->
-        <div id="result-lu" style="display:none; margin-top:20px;">
-            <h3>Décomposition LU</h3>
-            <div class="lu-block">
-                <div>
-                    <h4>Matrice L</h4>
-                    <div id="result-matrix-L"></div>
-                </div>
-                <div>
-                    <h4>Matrice U</h4>
-                    <div id="result-matrix-U"></div>
-                </div>
-            </div>
-        </div>
-          </div>
-        </section>
+      </div>
     
-      </main>
-
-
-
+      
+    
+      <div class="resultat">
+        <button id="toggleFractionBtn" onclick="toggleFractions()">Fractions : ON</button>
+    
+    
+        <h3>Résultat</h3>
+    
+        <button onclick="clean()">Nettoyer</button>
+        <div id="res" class="resultat-list"></div>
+    
 </body>
 <footer>
     <small>Copyright ©<a href="https://benjamingarcia.fr/" target="_blank">Benjamin Garica</a> 2025 linearlab.fr. Tous droits réservés.</small>
