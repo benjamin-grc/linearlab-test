@@ -164,7 +164,7 @@ button.ghost:hover {
 }
 
 .text-mode {
-  display: none;
+  display: flex;
   padding: 10px;
   border: 1px solid #e1e6ef;
   border-radius: 10px;
