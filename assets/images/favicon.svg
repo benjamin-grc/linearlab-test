@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="LinearLab favicon">
+  <defs>
+    <linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#3ec9a7" />
+      <stop offset="100%" stop-color="#2b5f9e" />
+    </linearGradient>
+  </defs>
+  <rect width="64" height="64" rx="12" fill="url(#grad)" />
+  <path d="M20 16h8v32h-8zM36 16h8c4.418 0 8 3.582 8 8v16c0 4.418-3.582 8-8 8h-8z" fill="#fff"/>
+  <path d="M36 24h6c1.105 0 2 .895 2 2v12c0 1.105-.895 2-2 2h-6z" fill="#0e1b2b" opacity="0.8"/>
+</svg>
