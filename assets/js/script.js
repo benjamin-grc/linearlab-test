@@ -106,14 +106,14 @@ function applyTextMatrix(matrixId) {
     }
 
     const nums = parts.map((p, i) => {
-      const v = parseCell(p); // gère aussi bien 1/4 que 0,25 ou -2/3
-      if (Number.isNaN(v)) {
+      try {
+        return parseCell(p); // gère aussi bien 1/4 que 0,25 ou -2/3
+      } catch (error) {
         alert(`Valeur invalide "${p}" à la ligne ${r + 1}, colonne ${i + 1}.`);
-        throw new Error("Invalid number");
+        throw error;
       }
-      return v;
     });
-    
+
 
     matrix.push(nums);
   }
@@ -145,7 +145,7 @@ function buildMatrixFromArray(matrixId, data) {
   for (let i = 0; i < rows; i++) {
     html += '<tr>';
     for (let j = 0; j < cols; j++) {
-      html += `<td><input type="text" inputmode="decimal" id="${matrixId}_${i}_${j}" value="${data[i][j]}"></td>`;
+      html += `<td><input type="text" inputmode="decimal" id="${matrixId}_${i}_${j}" value="${displayCellValue(data[i][j])}"></td>`;
 
     }
     html += '</tr>';
@@ -208,6 +208,9 @@ function formatEntryForLatex(x) {
     if (typeof x === "number") {
       return math.format(x, { notation: "fixed", precision: 4 });
     }
+    if (isSymbolicEntry(x)) {
+      return toTex(x);
+    }
     return String(x);
   }
 
@@ -217,6 +220,11 @@ function formatEntryForLatex(x) {
   if (typeof math !== "undefined" && math.isFraction && math.isFraction(x)) {
     if (x.d === 1) return String(x.n);
     return `\\dfrac{${x.n}}{${x.d}}`;
+  }
+
+  // 1bis) Expression symbolique
+  if (isSymbolicEntry(x)) {
+    return toTex(x);
   }
 
   // 2) Nombre classique
@@ -245,6 +253,41 @@ function toggleFractions() {
   const btn = document.getElementById("toggleFractionBtn");
   btn.textContent = "Fractions : " + (useFractions ? "ON" : "OFF");
 
+}
+
+function toTex(value) {
+  try {
+    if (typeof math !== "undefined" && math.isNode && math.isNode(value)) {
+      return value.toTex();
+    }
+    if (typeof value === "string") return value;
+  } catch (e) {}
+  return String(value);
+}
+
+function displayCellValue(value) {
+  if (value == null) return "";
+  if (typeof math !== "undefined" && math.isFraction?.(value)) {
+    return `${value.n}/${value.d}`;
+  }
+  if (typeof math !== "undefined" && math.isNode?.(value)) {
+    return value.toString();
+  }
+  if (typeof math !== "undefined" && math.isComplex?.(value)) {
+    return `${value.re}${value.im >= 0 ? "+" : ""}${value.im}i`;
+  }
+  return value;
+}
+
+function isNumberLike(value) {
+  return (
+    typeof value === "number" ||
+    (typeof math !== "undefined" && (math.isBigNumber?.(value) || math.isFraction?.(value)))
+  );
+}
+
+function isSymbolicEntry(value) {
+  return (typeof math !== "undefined" && math.isNode?.(value)) || typeof value === "string";
 }
 
 
@@ -294,21 +337,33 @@ function generateB() {
 
 //Parsing des cellules (gère 1/4, 2/3, etc.)
 function parseCell(str) {
-  if (str == null) return NaN;
+  if (str == null) return 0;
   str = String(str).trim();
   if (str === '') return 0; // case vide -> 0, à adapter si besoin
 
   // On tente d'utiliser math.js si disponible pour gérer des expressions comme "1/4"
   if (typeof math !== 'undefined' && math.evaluate) {
     try {
-      return math.evaluate(str);
+      const evaluated = math.evaluate(str);
+      if (isNumberLike(evaluated) || math.isComplex?.(evaluated)) {
+        return evaluated;
+      }
     } catch (e) {
       // si math.js n'arrive pas à parser, on retombe sur parseFloat
     }
   }
 
   const v = parseFloat(str.replace(',', '.'));
-  return isNaN(v) ? NaN : v;
+  if (!Number.isNaN(v)) {
+    return v;
+  }
+
+  // sinon on considère une expression symbolique
+  try {
+    return math.parse(str);
+  } catch (error) {
+    throw new Error("Invalid value");
+  }
 }
 
 
@@ -323,7 +378,7 @@ function getMatrixA() {
     for (let j = 0; j < cl; j++) {
       const index = i * cl + j;
       const value = parseCell(inputs[index]?.value);
-      matrix[i][j] = isNaN(value) ? 0 : value;
+      matrix[i][j] = value;
     }
   }
   return matrix;
@@ -341,7 +396,7 @@ function getMatrixB() {
     for (let j = 0; j < cl; j++) {
       const index = i * cl + j;
       const value = parseCell(inputs[index]?.value);
-      matrix[i][j] = isNaN(value) ? 0 : value;
+      matrix[i][j] = value;
     }
   }
   return matrix;
@@ -362,7 +417,7 @@ function setMatrixA(matrix) {
     html += "<tr>";
     for (let j = 0; j < cl; j++) {
       const val = matrix[i][j] != null ? matrix[i][j] : 0;
-      html += `<td><input type='number' value='${val}'></td>`;
+      html += `<td><input type='text' inputmode='decimal' value='${displayCellValue(val)}'></td>`;
     }
     html += "</tr>";
   }
@@ -382,7 +437,7 @@ function setMatrixB(matrix) {
     html += "<tr>";
     for (let j = 0; j < cl; j++) {
       const val = matrix[i][j] != null ? matrix[i][j] : 0;
-      html += `<td><input type='number' value='${val}'></td>`;
+      html += `<td><input type='text' inputmode='decimal' value='${displayCellValue(val)}'></td>`;
     }
     html += "</tr>";
   }
@@ -398,6 +453,127 @@ function matChoice() {
   } else {
     return [getMatrixB(), "B"];
   }
+}
+
+function matrixContainsSymbolic(matrix) {
+  if (!Array.isArray(matrix)) return false;
+  return matrix.some(row =>
+    Array.isArray(row) && row.some((cell) => isSymbolicEntry(cell))
+  );
+}
+
+function valueToExpressionString(value) {
+  if (math.isNode?.(value)) return value.toString();
+  if (math.isFraction?.(value)) return `${value.n}/${value.d}`;
+  if (math.isComplex?.(value)) {
+    return `${value.re}${value.im >= 0 ? "+" : ""}${value.im}i`;
+  }
+  return String(value);
+}
+
+function simplifyExpression(exprString) {
+  try {
+    return math.simplify(exprString);
+  } catch (error) {
+    return math.parse(exprString);
+  }
+}
+
+function combineExpressions(valA, valB, operator) {
+  const exprA = valueToExpressionString(valA);
+  const exprB = valueToExpressionString(valB);
+  return simplifyExpression(`(${exprA}) ${operator} (${exprB})`);
+}
+
+function symbolicAdd(A, B) {
+  const li = A.length;
+  const cl = A[0].length;
+  const result = [];
+
+  for (let i = 0; i < li; i++) {
+    result[i] = [];
+    for (let j = 0; j < cl; j++) {
+      result[i][j] = combineExpressions(A[i][j], B[i][j], '+');
+    }
+  }
+  return result;
+}
+
+function symbolicSub(A, B) {
+  const li = A.length;
+  const cl = A[0].length;
+  const result = [];
+
+  for (let i = 0; i < li; i++) {
+    result[i] = [];
+    for (let j = 0; j < cl; j++) {
+      result[i][j] = combineExpressions(A[i][j], B[i][j], '-');
+    }
+  }
+  return result;
+}
+
+function symbolicScale(matrix, scalar) {
+  return matrix.map(row =>
+    row.map((cell) => combineExpressions(scalar, cell, '*'))
+  );
+}
+
+function symbolicMultiply(A, B) {
+  const rows = A.length;
+  const cols = B[0].length;
+  const common = B.length;
+  const result = [];
+
+  for (let i = 0; i < rows; i++) {
+    result[i] = [];
+    for (let j = 0; j < cols; j++) {
+      const parts = [];
+      for (let k = 0; k < common; k++) {
+        parts.push(`(${valueToExpressionString(A[i][k])})*(${valueToExpressionString(B[k][j])})`);
+      }
+      const expr = parts.length ? parts.join(' + ') : '0';
+      result[i][j] = simplifyExpression(expr);
+    }
+  }
+  return result;
+}
+
+function symbolicTranspose(matrix) {
+  const rows = matrix.length;
+  const cols = matrix[0].length;
+  const result = [];
+
+  for (let i = 0; i < cols; i++) {
+    result[i] = [];
+    for (let j = 0; j < rows; j++) {
+      result[i][j] = matrix[j][i];
+    }
+  }
+  return result;
+}
+
+function symbolicPower(matrix, exponent) {
+  if (!Number.isInteger(exponent) || exponent < 0) {
+    throw new Error("La puissance doit être un entier positif en mode formel.");
+  }
+  if (exponent === 0) {
+    const size = matrix.length;
+    const identity = [];
+    for (let i = 0; i < size; i++) {
+      identity[i] = [];
+      for (let j = 0; j < size; j++) {
+        identity[i][j] = i === j ? 1 : 0;
+      }
+    }
+    return identity;
+  }
+
+  let result = matrix;
+  for (let p = 1; p < exponent; p++) {
+    result = symbolicMultiply(result, matrix);
+  }
+  return result;
 }
 
 // ---------------------- Fonction de rang locale (fallback) ----------------------
@@ -466,6 +642,11 @@ function lu() {
   const [matrix, label] = matChoice();
   if (!matrix || matrix.length === 0) return;
 
+  if (matrixContainsSymbolic(matrix)) {
+    appendResultHTML("<span style='color:red;'>La décomposition LU n'est pas disponible pour des entrées symboliques.</span>");
+    return;
+  }
+
   if (matrixWorker) {
     matrixWorker.postMessage({ op: "lu", matrix, label });
   } else {
@@ -480,7 +661,9 @@ function transposeL() {
   const [matrix, label] = matChoice();
   if (!matrix || matrix.length === 0) return;
 
-  const trans = math.transpose(matrix);
+  const trans = matrixContainsSymbolic(matrix)
+    ? symbolicTranspose(matrix)
+    : math.transpose(matrix);
   lastResultMatrix = trans;
   texMatResult(`\\( ${label}^{T} \\)`, trans);
 }
@@ -489,9 +672,17 @@ function power() {
   const [matrix, label] = matChoice();
   if (!matrix || matrix.length === 0) return;
 
-  const p = parseFloat(document.getElementById("powerN").value);
+  const p = parseCell(document.getElementById("powerN").value);
 
-  if (matrixWorker) {
+  if (matrixContainsSymbolic(matrix) || isSymbolicEntry(p)) {
+    try {
+      const powerResult = symbolicPower(matrix, Number(p));
+      lastResultMatrix = powerResult;
+      texMatResult(`\\( ${label}^{${p}} \\)`, powerResult);
+    } catch (err) {
+      appendResultHTML(`<span style='color:red;'>${err.message}</span>`);
+    }
+  } else if (matrixWorker) {
     matrixWorker.postMessage({ op: "power", matrix, label, power: p });
   } else {
     const mpow = math.pow(matrix, p);
@@ -512,6 +703,11 @@ function inverse() {
     return;
   }
 
+  if (matrixContainsSymbolic(matrix)) {
+    appendResultHTML("<span style='color:red;'>L'inversion symbolique n'est pas encore prise en charge.</span>");
+    return;
+  }
+
   if (matrixWorker) {
     matrixWorker.postMessage({ op: "inverse", matrix, label });
   } else {
@@ -528,6 +724,11 @@ function inverse() {
 function rang() {
   const [matrix, label] = matChoice();
   if (!matrix || matrix.length === 0) return;
+
+  if (matrixContainsSymbolic(matrix)) {
+    appendResultHTML("<span style='color:red;'>Le rang symbolique n'est pas supporté.</span>");
+    return;
+  }
 
   if (matrixWorker) {
     matrixWorker.postMessage({ op: "rang", matrix, label });
@@ -549,6 +750,11 @@ function determinant() {
     return;
   }
 
+  if (matrixContainsSymbolic(matrix)) {
+    appendResultHTML("<span style='color:red;'>Le déterminant symbolique n'est pas disponible.</span>");
+    return;
+  }
+
   if (matrixWorker) {
     matrixWorker.postMessage({ op: "det", matrix, label });
   } else {
@@ -561,9 +767,13 @@ function matScale() {
   const [matrix, label] = matChoice();
   if (!matrix || matrix.length === 0) return;
 
-  const lambda = parseFloat(document.getElementById("scale").value);
+  const lambda = parseCell(document.getElementById("scale").value);
 
-  if (matrixWorker) {
+  if (matrixContainsSymbolic(matrix) || isSymbolicEntry(lambda)) {
+    const scaling = symbolicScale(matrix, lambda);
+    lastResultMatrix = scaling;
+    texMatResult(`\\( ${valueToExpressionString(lambda)}\\,${label} \\)`, scaling);
+  } else if (matrixWorker) {
     matrixWorker.postMessage({ op: "scale", matrix, label, scalar: lambda });
   } else {
     const scaling = math.multiply(lambda, matrix);
@@ -576,7 +786,11 @@ function sum() {
   const A = getMatrixA();
   const B = getMatrixB();
 
-  if (matrixWorker) {
+  if (matrixContainsSymbolic(A) || matrixContainsSymbolic(B)) {
+    const S = symbolicAdd(A, B);
+    lastResultMatrix = S;
+    texMatResult("\\( A+B \\)", S);
+  } else if (matrixWorker) {
     matrixWorker.postMessage({ op: "sum", matrix: A, otherMatrix: B, label: "A+B" });
   } else {
     const S = math.add(A, B);
@@ -589,7 +803,11 @@ function sub() {
   const A = getMatrixA();
   const B = getMatrixB();
 
-  if (matrixWorker) {
+  if (matrixContainsSymbolic(A) || matrixContainsSymbolic(B)) {
+    const R = symbolicSub(A, B);
+    lastResultMatrix = R;
+    texMatResult("\\( A-B \\)", R);
+  } else if (matrixWorker) {
     matrixWorker.postMessage({ op: "sub", matrix: A, otherMatrix: B, label: "A-B" });
   } else {
     const R = math.subtract(A, B);
@@ -602,7 +820,16 @@ function times() {
   const A = getMatrixA();
   const B = getMatrixB();
 
-  if (matrixWorker) {
+  if (A[0]?.length !== B.length) {
+    appendResultHTML("<span style='color:red;'>Colonnes de A et lignes de B incompatibles.</span>");
+    return;
+  }
+
+  if (matrixContainsSymbolic(A) || matrixContainsSymbolic(B)) {
+    const P = symbolicMultiply(A, B);
+    lastResultMatrix = P;
+    texMatResult("\\( AB \\)", P);
+  } else if (matrixWorker) {
     matrixWorker.postMessage({ op: "times", matrix: A, otherMatrix: B, label: "AB" });
   } else {
     const P = math.multiply(A, B);
@@ -623,6 +850,11 @@ function customOperation() {
 
   const A = getMatrixA();
   const B = getMatrixB();
+
+  if (matrixContainsSymbolic(A) || matrixContainsSymbolic(B)) {
+    appendResultHTML("<span style='color:red;'>Les opérations personnalisées ne sont pas encore disponibles en mode formel.</span>");
+    return;
+  }
 
   try {
     const result = math.evaluate(expr, { A, B });
