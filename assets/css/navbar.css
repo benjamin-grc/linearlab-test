@@ -97,11 +97,12 @@ nav a:hover{
 .dropdown-menu .dropdown-item{
     height: auto;
     padding: 12px 20px;
+
 }
 
 .dropdown-menu .placeholder{
-    color: var(--text-color);
     cursor: pointer;
+    color: white;
 }
 
 .dropdown:hover .dropdown-menu,

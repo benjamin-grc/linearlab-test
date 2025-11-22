@@ -1,8 +1,22 @@
 body {
-    background-color: var(--bg-color);
-    min-height: 100vh; /* s’adapte à la taille écran */
-    font-family: var(--font-family), monospace;
+  background-color: var(--bg-color);
+  min-height: 100vh; /* s’adapte à la taille écran */
+  font-family: var(--font-family), monospace;
+
+
+
+  background-image:
+    linear-gradient(var(--line-color) 1px, transparent 1px),
+    linear-gradient(90deg, var(--line-color) 1px, transparent 1px);
+  background-size: 35px 35px;
+  animation: drift 25s linear infinite;
+  
+  @keyframes drift {
+    from { background-position: 0 0; }
+    to   { background-position: 100px 100px; }
   }
+
+}
 
 
   .solver {
@@ -65,6 +79,10 @@ table {
   overflow: hidden;           /* masque les coins des cellules */
   width: 100%;
   margin-top: 15px;
+}
+
+.dimensions{
+  color: var(--text-color);
 }
 
 
