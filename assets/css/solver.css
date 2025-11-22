@@ -27,18 +27,18 @@ body {
   input[type="number"] {
     width: 70px;
     padding: 8px 10px;
-    border: 1px solid #ccc;
+    border: 1px solid var(--input-border);
     border-radius: 8px;
-    background: #fafafa;
+    background: var(--input-bg);
     transition: 0.2s;
     font-size: 15px;
   }
   
   input[type="number"]:focus {
     outline: none;
-    border-color: #2962ff;
-    background: white;
-    box-shadow: 0 0 6px rgba(41, 98, 255, 0.4);
+    border-color: var(--btn-color);
+    background: var(--input-alt-bg);
+    box-shadow: 0 0 6px rgba(139, 92, 246, 0.35);
   }
 
   /* Désactive les flèches pour tous les navigateurs */
@@ -54,7 +54,7 @@ input[type="number"]::-webkit-outer-spin-button {
 
   
 table {
-  box-shadow: rgba(6, 24, 44, 0.4) 0px 0px 0px 2px, rgba(6, 24, 44, 0.65) 0px 4px 6px -1px, rgba(255, 255, 255, 0.08) 0px 1px 0px inset;
+  box-shadow: var(--box-shadow);
   border-spacing: 0;          /* important */
   border-radius: 12px;        /* coins arrondis */
   overflow: hidden;           /* masque les coins des cellules */
@@ -64,13 +64,13 @@ table {
 
   
   td, th {
-    border: 1px solid #ccc;
+    border: 1px solid var(--input-border);
     padding: 6px;
     text-align: center;
   }
-  
+
   th {
-    background: #eee;
+    background: var(--input-alt-bg);
   }
   
   .controls {
