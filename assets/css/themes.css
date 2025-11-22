@@ -4,7 +4,10 @@
     --text-color: #222831;
     --btn-color: #76ABAE;
     --btn-hcolor: #31363F;
-
+    --line-color: rgba(0, 0, 0, 0.08);
+    --box-shadow:rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    --border-color: solid 1px black;
+    --panel-color:#ffffff;
     --font-family : 'Ubuntu', sans-serif;
 
     }
@@ -13,12 +16,14 @@
 
 
 .darkmode{
-
-    --bg-color: #1b262c;
-    --text-color: #bbe1fa;
-    --btn-color: #0f4c75;
-    --btn-hcolor: #3282b8;
-
+  --line-color: rgba(184, 180, 180, 0.08);
+    --bg-color: #151515;
+    --text-color: #B4A5A5;
+    --btn-color: #301B3F;
+    --btn-hcolor: #301B3F;
+    --box-shadow:rgba(255, 255, 254.5, 0.35) 0px 5px 15px;
+    --border-color: solid 1px rgb(255, 255, 255);
+    --panel-color: #322828dd;
     }
 
 
