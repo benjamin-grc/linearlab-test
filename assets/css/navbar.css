@@ -33,7 +33,7 @@ nav a{
     display: flex;
     align-items: center;
     text-decoration: none;
-    color: var(--bg-color);
+    color: var(--text-color);
 }
 
 nav a:hover{
@@ -51,7 +51,7 @@ nav a:hover{
 .dropdown-toggle{
     background: transparent;
     border: none;
-    color: var(--bg-color);
+    color: var(--text-color);
     font: inherit;
     height: 100%;
     padding: 0 20px;
@@ -100,7 +100,7 @@ nav a:hover{
 }
 
 .dropdown-menu .placeholder{
-    color: var(--bg-color);
+    color: var(--text-color);
     cursor: pointer;
 }
 
@@ -114,7 +114,7 @@ nav .home-link{
 }
 
 nav svg{
-    fill: var(--bg-color)
+    fill: var(--text-color)
 }
 
 #sidebar-active{

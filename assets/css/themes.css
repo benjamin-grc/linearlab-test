@@ -24,22 +24,22 @@
 
 
 .darkmode{
-    --line-color: rgba(255, 255, 255, 0.04);
-    --bg-color: #0f1014;
-    --text-color: #e5e7eb;
-    --btn-color: #8b5cf6;
-    --btn-hcolor: #7c3aed;
-    --box-shadow: rgba(0, 0, 0, 0.45) 0px 8px 24px;
-    --border-color: solid 1px #343b4a;
-    --panel-color: #181b25;
-    --input-bg: #121620;
-    --input-alt-bg: #161b26;
-    --input-border: #2f3544;
-    --soft-border: #1f2533;
-    --muted-text: #b0b7c5;
-    --accent-surface-one: #1b2132;
-    --accent-surface-two: #162125;
-    --nav-bg: #111827;
+    --line-color: rgba(255, 255, 255, 0.06);
+    --bg-color: #0d121c;
+    --text-color: #e8ecf5;
+    --btn-color: #8e7cff;
+    --btn-hcolor: #7a6ae6;
+    --box-shadow: rgba(0, 0, 0, 0.55) 0px 10px 30px;
+    --border-color: solid 1px #2f3650;
+    --panel-color: #161c28;
+    --input-bg: #111826;
+    --input-alt-bg: #141b2a;
+    --input-border: #25304a;
+    --soft-border: #1d263a;
+    --muted-text: #c0c7d4;
+    --accent-surface-one: #1a2133;
+    --accent-surface-two: #16202d;
+    --nav-bg: #131a2a;
     }
 
 
