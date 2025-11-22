@@ -5,9 +5,17 @@
     --btn-color: #76ABAE;
     --btn-hcolor: #31363F;
     --line-color: rgba(0, 0, 0, 0.08);
-    --box-shadow:rgba(0, 0, 0, 0.35) 0px 5px 15px;
-    --border-color: solid 1px black;
-    --panel-color:#ffffff;
+    --box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    --border-color: solid 1px #101010;
+    --panel-color: #ffffff;
+    --input-bg: #ffffff;
+    --input-alt-bg: #f7f8fb;
+    --input-border: #cfd5dd;
+    --soft-border: #e1e6ef;
+    --muted-text: #556072;
+    --accent-surface-one: #edf5ff;
+    --accent-surface-two: #e6f7ea;
+    --nav-bg: #222831;
     --font-family : 'Ubuntu', sans-serif;
 
     }
@@ -16,14 +24,22 @@
 
 
 .darkmode{
-  --line-color: rgba(184, 180, 180, 0.08);
-    --bg-color: #151515;
-    --text-color: #B4A5A5;
-    --btn-color: #301B3F;
-    --btn-hcolor: #301B3F;
-    --box-shadow:rgba(255, 255, 254.5, 0.35) 0px 5px 15px;
-    --border-color: solid 1px rgb(255, 255, 255);
-    --panel-color: #322828dd;
+    --line-color: rgba(255, 255, 255, 0.04);
+    --bg-color: #0f1014;
+    --text-color: #e5e7eb;
+    --btn-color: #8b5cf6;
+    --btn-hcolor: #7c3aed;
+    --box-shadow: rgba(0, 0, 0, 0.45) 0px 8px 24px;
+    --border-color: solid 1px #343b4a;
+    --panel-color: #181b25;
+    --input-bg: #121620;
+    --input-alt-bg: #161b26;
+    --input-border: #2f3544;
+    --soft-border: #1f2533;
+    --muted-text: #b0b7c5;
+    --accent-surface-one: #1b2132;
+    --accent-surface-two: #162125;
+    --nav-bg: #111827;
     }
 
 
