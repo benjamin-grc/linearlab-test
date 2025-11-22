@@ -49,10 +49,9 @@ p {
 }
 
 .panel {
-  background: #fdfdfd;
-  border: 1px solid #dce1e7;
+  border: var(--border-color);
   border-radius: 12px;
-  box-shadow: 0px 6px 18px rgba(0, 0, 0, 0.06);
+  box-shadow: var(--box-shadow);
   padding: 20px;
 }
 
@@ -68,8 +67,8 @@ p {
 }
 
 .card {
-  background: #ffffff;
-  border: 1px solid #dce1e7;
+  background: var(--panel-color);
+
   border-radius: 12px;
   box-shadow: 0px 3px 12px rgba(0, 0, 0, 0.05);
   padding: 16px;
