@@ -33,7 +33,7 @@ nav a{
     display: flex;
     align-items: center;
     text-decoration: none;
-    color: var(--text-color);
+    color: #e8ecf5;
 }
 
 nav a:hover{
@@ -51,7 +51,7 @@ nav a:hover{
 .dropdown-toggle{
     background: transparent;
     border: none;
-    color: var(--text-color);
+    color: #e8ecf5;
     font: inherit;
     height: 100%;
     padding: 0 20px;
