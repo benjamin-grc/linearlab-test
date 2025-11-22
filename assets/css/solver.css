@@ -1,8 +1,22 @@
 body {
-    background-color: var(--bg-color);
-    min-height: 100vh; /* s’adapte à la taille écran */
-    font-family: var(--font-family), monospace;
+  background-color: var(--bg-color);
+  min-height: 100vh; /* s’adapte à la taille écran */
+  font-family: var(--font-family), monospace;
+
+
+
+  background-image:
+    linear-gradient(var(--line-color) 1px, transparent 1px),
+    linear-gradient(90deg, var(--line-color) 1px, transparent 1px);
+  background-size: 35px 35px;
+  animation: drift 25s linear infinite;
+  
+  @keyframes drift {
+    from { background-position: 0 0; }
+    to   { background-position: 100px 100px; }
   }
+
+}
 
 
   .solver {
@@ -30,6 +44,7 @@ body {
     border: 1px solid var(--input-border);
     border-radius: 8px;
     background: var(--input-bg);
+    color: var(--text-color);
     transition: 0.2s;
     font-size: 15px;
   }
@@ -52,7 +67,11 @@ input[type="number"]::-webkit-outer-spin-button {
     margin: 0;
 }
 
-  
+.darkmode input[type="number"] {
+    color: #ffffff;
+}
+
+
 table {
   box-shadow: var(--box-shadow);
   border-spacing: 0;          /* important */
@@ -62,11 +81,16 @@ table {
   margin-top: 15px;
 }
 
-  
+.dimensions{
+  color: var(--text-color);
+}
+
+
   td, th {
     border: 1px solid var(--input-border);
     padding: 6px;
     text-align: center;
+    color: var(--text-color);
   }
 
   th {
@@ -106,6 +130,12 @@ table {
 
   .result .math-line:last-child {
     margin-bottom: 0;
+  }
+
+  /* Harmoniser la couleur du texte MathJax (a_{ij}, etc.) avec le thème */
+  .result .mjx-container,
+  .explanation .mjx-container {
+    color: var(--text-color);
   }
   
 
