@@ -20,6 +20,12 @@
 
     }
 
+/* Harmonise la couleur des formules MathJax avec le thème actif */
+.mjx-container,
+.mjx-container .mjx-math {
+    color: var(--text-color) !important;
+}
+
 
 
 
