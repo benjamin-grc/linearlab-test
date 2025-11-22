@@ -67,11 +67,12 @@ table {
   margin-top: 15px;
 }
 
-  
+
   td, th {
     border: 1px solid var(--input-border);
     padding: 6px;
     text-align: center;
+    color: var(--text-color);
   }
 
   th {
@@ -111,6 +112,12 @@ table {
 
   .result .math-line:last-child {
     margin-bottom: 0;
+  }
+
+  /* Harmoniser la couleur du texte MathJax (a_{ij}, etc.) avec le thème */
+  .result .mjx-container,
+  .explanation .mjx-container {
+    color: var(--text-color);
   }
   
 
