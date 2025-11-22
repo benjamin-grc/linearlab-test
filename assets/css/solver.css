@@ -30,6 +30,7 @@ body {
     border: 1px solid var(--input-border);
     border-radius: 8px;
     background: var(--input-bg);
+    color: var(--text-color);
     transition: 0.2s;
     font-size: 15px;
   }
@@ -52,7 +53,11 @@ input[type="number"]::-webkit-outer-spin-button {
     margin: 0;
 }
 
-  
+.darkmode input[type="number"] {
+    color: #ffffff;
+}
+
+
 table {
   box-shadow: var(--box-shadow);
   border-spacing: 0;          /* important */
