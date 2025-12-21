@@ -1,9 +1,23 @@
 body {
-
   background-color: var(--bg-color);
   min-height: 100vh; /* s’adapte à la taille écran */
   font-family: var(--font-family), monospace;
+
+
+
+  background-image:
+    linear-gradient(var(--line-color) 1px, transparent 1px),
+    linear-gradient(90deg, var(--line-color) 1px, transparent 1px);
+  background-size: 35px 35px;
+  animation: drift 25s linear infinite;
+  
+  @keyframes drift {
+    from { background-position: 0 0; }
+    to   { background-position: 100px 100px; }
+  }
+
 }
+
 
 .container{
   display: flex;
@@ -32,9 +46,8 @@ h2{
 }
 
 .actu{
-  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
-  /* box-shadow: rgba(240, 46, 170, 0.4) 5px 5px, rgba(240, 46, 170, 0.3) 10px 10px, rgba(240, 46, 170, 0.2) 15px 15px, rgba(240, 46, 170, 0.1) 20px 20px, rgba(240, 46, 170, 0.05) 25px 25px;*/
-  border: solid 1px black;
+  box-shadow: var(--box-shadow);
+  border: var(--border-color);
   border-radius: 12px;
   display: flex;
   flex-direction: column;
@@ -43,6 +56,7 @@ h2{
   width: 70%;
   padding: 10px;
   gap: 2rem;
+  color:var(--text-color);
 }
 
 .actu h3{
@@ -56,9 +70,10 @@ h2{
   margin-left: 20px;
 }
 
+
 .main-text{
-  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
-  border: solid 1px black;
+  box-shadow: var(--box-shadow);
+  border: var(--border-color);
   border-radius: 12px;
   display: flex;
   flex-direction: column;
@@ -66,6 +81,7 @@ h2{
   max-width: 70%; /* limite largeur pour meilleure lisibilité */
   padding: 10px;
   gap: 2rem;
+  color: var(--text-color) ;
 }
 
 .main-text h3{
@@ -76,7 +92,6 @@ h2{
 
 .main-text p{
   font-size: 20px;
-  color: black ;
   line-height: 1.40;
   justify-content: center;
   text-align: justify;

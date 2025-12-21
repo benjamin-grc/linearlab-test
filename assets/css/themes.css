@@ -4,19 +4,80 @@
     --text-color: #222831;
     --btn-color: #76ABAE;
     --btn-hcolor: #31363F;
-
+    --line-color: rgba(0, 0, 0, 0.08);
+    --box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+    --border-color: solid 1px #101010;
+    --panel-color: #ffffff;
+    --input-bg: #ffffff;
+    --input-alt-bg: #f7f8fb;
+    --input-border: #cfd5dd;
+    --soft-border: #e1e6ef;
+    --muted-text: #556072;
+    --accent-surface-one: #edf5ff;
+    --accent-surface-two: #e6f7ea;
+    --nav-bg: #222831;
     --font-family : 'Ubuntu', sans-serif;
 
     }
 
 
 .darkmode{
+    --line-color: rgba(255, 255, 255, 0.06);
+    --bg-color: #0d121c;
+    --text-color: #e8ecf5;
+    --btn-color: #8e7cff;
+    --btn-hcolor: #7a6ae6;
+    --box-shadow: rgba(0, 0, 0, 0.55) 0px 10px 30px;
+    --border-color: solid 1px #2f3650;
+    --panel-color: #161c28;
+    --input-bg: #111826;
+    --input-alt-bg: #141b2a;
+    --input-border: #25304a;
+    --soft-border: #1d263a;
+    --muted-text: #c0c7d4;
+    --accent-surface-one: #1a2133;
+    --accent-surface-two: #16202d;
+    --nav-bg: #131a2a;
+    }
 
-    --bg-color: #1b262c;
-    --text-color: #bbe1fa;
-    --btn-color: #0f4c75;
-    --btn-hcolor: #3282b8;
 
+    #theme-switch{
+        height: 50px;
+        width: 50px;
+        padding: 0;
+        border-radius: 50%;
+        border: none;
+        background-color: var(--btn-color);
+        display: flex;
+        justify-content: center;
+        cursor: pointer;
+        align-items: center;
+        position: fixed;
+        transform: scale(1); /* état normal */
+        bottom: 20px;
+        left: 20px;
+        transition: transform 0.3s ease, background-color 0.3s ease, color 0.3s ease; /* transition pour plusieurs propriétés */
+      }
+      
+    #theme-switch:hover{
+        transform: scale(1.30); /* état au survol */
+        color: var(--bg-color);
+        background-color: var(--btn-hcolor);
+      
+    }
+    
+    #theme-switch svg{
+        fill: var(--text-color) /* Pour choisir la couleur des logos*/
+      }
+    #theme-switch svg:last-child{
+        display: none;
+      }
+    .darkmode #theme-switch svg:first-child{
+        display: none;
+      }
+    .darkmode #theme-switch svg:last-child{
+        display: block;
+    
     }
 
 footer {
