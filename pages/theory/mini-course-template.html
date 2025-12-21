@@ -49,34 +49,45 @@
   <main class="lesson">
     <header class="lesson-header">
       <p class="lesson-tag">Mini-cours</p>
-      <h1>[Titre du mini-cours]</h1>
-      <p class="lesson-intro">[Phrase d'introduction courte.]</p>
+      <h1>Multiplication de matrices</h1>
+      <p class="lesson-intro">Comprendre la règle de multiplication et lire rapidement un exemple simple.</p>
     </header>
 
     <section class="lesson-section">
       <h2>Définition</h2>
-      <p>[Explication en quelques lignes.]</p>
+      <p>Pour multiplier deux matrices, le nombre de colonnes de la première doit être égal au nombre de lignes de la seconde. Le coefficient obtenu est un produit ligne × colonne.</p>
     </section>
 
     <section class="lesson-section">
       <h2>Exemple</h2>
-      <p>[Petit exemple guidé.]</p>
-      <div class="lesson-example">\([Formule simple]\)</div>
+      <p>Soit \(A = \\begin{pmatrix}1 & 2\\\\3 & 4\\end{pmatrix}\) et \(B = \\begin{pmatrix}2 & 0\\\\1 & 3\\end{pmatrix}\).</p>
+      <div class="lesson-example">\(
+        AB =
+        \\begin{pmatrix}
+          1\\cdot2 + 2\\cdot1 & 1\\cdot0 + 2\\cdot3 \\\\
+          3\\cdot2 + 4\\cdot1 & 3\\cdot0 + 4\\cdot3
+        \\end{pmatrix}
+        =
+        \\begin{pmatrix}
+          4 & 6 \\\\
+          10 & 12
+        \\end{pmatrix}
+      \)</div>
     </section>
 
     <section class="lesson-section">
       <h2>Exercices</h2>
       <ul>
-        <li>[Exercice 1]</li>
-        <li>[Exercice 2]</li>
+        <li>Calcule \( \\begin{pmatrix}1 & 0\\\\2 & 1\\end{pmatrix} \\times \\begin{pmatrix}3 & 2\\\\1 & 4\\end{pmatrix} \).</li>
+        <li>Vérifie si \( \\begin{pmatrix}1 & 2 & 3\\end{pmatrix} \\times \\begin{pmatrix}1\\\\0\\\\2\\end{pmatrix} \) est défini.</li>
       </ul>
     </section>
 
     <section class="lesson-section">
       <h2>Résumé</h2>
       <ul>
-        <li>[Point clé 1]</li>
-        <li>[Point clé 2]</li>
+        <li>La multiplication est possible si colonnes(A) = lignes(B).</li>
+        <li>Chaque coefficient est un produit ligne × colonne.</li>
       </ul>
       <a class="lesson-cta" href="theory.html">Retour à la page théorie</a>
     </section>
