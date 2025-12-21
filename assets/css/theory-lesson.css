@@ -16,14 +16,13 @@ body {
     max-width: 720px;
   }
 
-  .lesson-header,
-  .lesson-section {
+  .lesson-header {
     background: var(--panel-color);
     border: var(--border-color);
     border-radius: 14px;
     padding: 20px;
     box-shadow: var(--box-shadow);
-    margin-bottom: 18px;
+    margin-bottom: 20px;
   }
 
   .lesson-header h1 {
@@ -43,9 +42,31 @@ body {
     line-height: 1.6;
   }
 
-  .lesson-section h2 {
-    margin-top: 0;
-    font-size: 1.4rem;
+  .lesson-block {
+    background: var(--panel-color);
+    border: var(--border-color);
+    border-radius: 14px;
+    padding: 18px 20px;
+    box-shadow: var(--box-shadow);
+    margin-bottom: 16px;
+    border-left: 6px solid var(--btn-color);
+  }
+
+  .lesson-block--accent {
+    background: var(--accent-surface-one);
+  }
+
+  .lesson-block--summary {
+    background: var(--accent-surface-two);
+  }
+
+  .lesson-block-title {
+    font-weight: 600;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+    font-size: 0.85rem;
+    color: var(--muted-text);
+    margin-bottom: 8px;
   }
 
   .lesson-example {
@@ -53,6 +74,17 @@ body {
     padding: 12px;
     border-radius: 10px;
     background: var(--accent-surface-one);
+  }
+
+  .lesson-highlight {
+    margin-top: 10px;
+    font-weight: 600;
+  }
+
+  .lesson-list,
+  .lesson-steps {
+    padding-left: 18px;
+    line-height: 1.7;
   }
 
   .lesson-cta {
