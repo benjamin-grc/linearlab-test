@@ -52,10 +52,6 @@ body {
     border-left: 6px solid var(--btn-color);
   }
 
-  .lesson-block--accent {
-    background: var(--accent-surface-one);
-  }
-
   .lesson-block--summary {
     background: var(--accent-surface-two);
   }
@@ -74,11 +70,6 @@ body {
     padding: 12px;
     border-radius: 10px;
     background: var(--accent-surface-one);
-  }
-
-  .lesson-highlight {
-    margin-top: 10px;
-    font-weight: 600;
   }
 
   .lesson-list,
